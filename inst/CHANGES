@@ -1,0 +1,21 @@
+Version 1.0-0
+
+ o  Initial version released to CRAN.
+
+Version 1.0-1
+
+ o  Small fixes.
+ 
+Version 1.0-2
+
+ o  More small fixes.
+ 
+Version 1.0-3
+
+ o  Removed the Log-Exceptions: field from the DESCRIPTION file; it is not longer used.
+ 
+Version 1.0-4
+
+ o  Demonstrates use of "remove" directive in menus.txt file
+ 
+
