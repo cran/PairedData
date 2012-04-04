@@ -21,7 +21,7 @@ This dataset gives the ratings on a continuous ten-points scale of two experts a
 }
 }
 
-\source{Private communication. Mickael Campo, CRIS, Lyon 1 University, FRANCE}
+\source{Private communication. Mickael Campo, CRIS, Lyon 1 University, FRANCE.}
 
 
 \keyword{datasets}

@@ -1,0 +1,10 @@
+exportPattern("^[[:alpha:]]+")
+exportMethods(
+    "effect.size",
+    "summary" 
+)
+exportClasses(
+    "paired" 
+)
+
+import(graphics,methods,MASS,gld,mvtnorm,lattice,ggplot2)

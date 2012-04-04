@@ -1,23 +1,36 @@
 \name{plotMcNeil}
 \alias{plotMcNeil}
-\title{parallel lines plot}
+\alias{plotMcNeil,paired-method}
+
+\title{Parallel lines plot}
 \description{
 Produce a parallel lines plot for paired data.
 }
 \usage{
-plotMcNeil(df,condition1,condition2,subjects,groups=NULL,facet=TRUE,...)
+\S4method{plotMcNeil}{paired}(object,groups=NULL,subjects=NULL,facet=TRUE,...)
 }
 
 \arguments{
-  \item{df}{Data frame}
-  \item{condition1}{name of the variable corresponding to measurements in the "first" condition}
- \item{condition2}{name of the variable corresponding to measurements in the "second" condition}
-  \item{subjects}{name of the variable corresponding to subjects}
-\item{groups}{name of the variable corresponding to groups}
-\item{facet}{In case of groups, faceting (TRUE) or overplotting (FALSE)}
- \item{...}{Arguments to be passed to methods, such as graphical parameters (see par)}
+  \item{object}{
+an object of class paired.
+}
+  \item{groups}{
+factor corresponding to groups (optional).
+}
+  \item{subjects}{
+vector corresponding to subjects (optional).
+}
+  \item{facet}{
+faceting or grouping strategy for plotting?
 }
 
+\item{\dots}{
+arguments to be passed to methods.}
+}
+
+\value{
+A graphical object of class ggplot.
+}
 
 \references{
 D.R. McNeil. On graphing paired data. The American Statistician, 46 :307-310, 1992.
@@ -25,11 +38,13 @@ D.R. McNeil. On graphing paired data. The American Statistician, 46 :307-310, 19
 
 \author{Stephane CHAMPELY}
 
-\seealso{plotCor, plotBA}
+\seealso{plotBA}
 
 
 \examples{
 data(PrisonStress)
-plotMcNeil(df=PrisonStress,condition1="PSSbefore",condition2="PSSafter",subjects="Subject")
-plotMcNeil(df=PrisonStress,condition1="PSSbefore",condition2="PSSafter",subjects="Subject",groups="Group")
+with(PrisonStress,plotMcNeil(paired(PSSbefore,PSSafter)))
+with(PrisonStress,plotMcNeil(paired(PSSbefore,PSSafter),
+groups=Group))
 }
+

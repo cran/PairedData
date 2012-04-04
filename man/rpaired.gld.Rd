@@ -1,24 +1,31 @@
 \name{rpaired.gld}
 \alias{rpaired.gld}
-\title{Simulate paired samples}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Simulate paired samples
+}
 \description{
 Simulate paired data with a given correlation (Kendall's tau=(2/pi)arcsine(r)) and marginals being
  Generalized Tukey-Lambda distributions.
 }
+
 \usage{
-rpaired.gld(n,d1,d2,r)
+rpaired.gld(n, d1=c(0.000,0.1974,0.1349,0.1349), d2=c(0.000,0.1974,0.1349,0.1349), r)
 }
+
 \arguments{
-  \item{n}{Sample size}
-  \item{d1}{Vector of 4 parameters for the first G-TL distribution}
-  \item{d2}{Vector of 4 parameters for the second G-TL distribution}
-\item{r}{Correlation}
+  \item{n}{sample size.}
+  \item{d1}{vector of four parameters for the first G-TL distribution.}
+  \item{d2}{vector of four parameters for the second G-TL distribution.}
+\item{r}{correlation.}
 }
+
+
 \value{
-A list with two components: 
-\item{x}{First sample} 
-\item{y}{Second sample} 
+An object of class paired.
 }
+
+
 \references{
 P.M. Grambsch. Simple robust tests for scale differences in paired data. Biometrika, 81, 359-372, 1994.
 }
@@ -28,5 +35,9 @@ P.M. Grambsch. Simple robust tests for scale differences in paired data. Biometr
 \seealso{rpaired.contaminated}
 
 \examples{
-rpaired.gld(n=30,d1=c(0,0.1974,0.1349,0.1349),d2=c(0,0.1974,0.1349,0.1349),r=0.5)
+rpaired.gld(n=30,r=0.5)
+
+data(lambda.table)
+p<-rpaired.gld(n=30,d1=lambda.table[7,],d2=lambda.table[7,],r=0.5)
+plot(p)
 }

@@ -7,7 +7,7 @@
 \title{Actual and imaginary performances in equitation}
 
 \description{
-This dataset gives the actual and motor imaginary performances in equitation for 8 beginners.
+This dataset gives the actual and motor imaginary performances (time) in equitation for 8 beginners.
 }
 
 \usage{data(HORSEbegin)}
@@ -20,7 +20,7 @@ This dataset gives the actual and motor imaginary performances in equitation for
 }
 }
 
-\source{Private communication. Aymeric Guillot, CRIS, Lyon 1 University, FRANCE}
+\source{Private communication. Aymeric Guillot, CRIS, Lyon 1 University, FRANCE.}
 
 \references{
 M. Louis, C. Collet, S. Champely, and A. Guillot. Differences in motor imagery time when predicting task duration. 

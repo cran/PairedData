@@ -7,7 +7,7 @@
 \title{Actual and imaginary performances in SKI}
 
 \description{
-This dataset gives the actual and motor imaginary performances in SKI for 12 experts.
+This dataset gives the actual and motor imaginary performances (time) in ski for 12 experts.
 }
 
 \usage{data(SKIexperts)}
@@ -20,7 +20,7 @@ This dataset gives the actual and motor imaginary performances in SKI for 12 exp
 }
 }
 
-\source{Private communication. Aymeric Guillot, CRIS, Lyon 1 University, FRANCE}
+\source{Private communication. Aymeric Guillot, CRIS, Lyon 1 University, FRANCE.}
 
 \references{
 M. Louis, C. Collet, S. Champely, and A. Guillot. Differences in motor imagery time when predicting task duration. 

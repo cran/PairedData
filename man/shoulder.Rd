@@ -22,11 +22,15 @@ This dataset gives the flexibility for the right and left shoulders in 15 swimme
 }
 }
 
-\source{Private communication. Karine Monteil, CRIS, Lyon 1 University, FRANCE}
+\source{Private communication. Karine Monteil, CRIS, Lyon 1 University, FRANCE.}
 
 \references{Monteil, K., Taiar, R., Champely, S. and Martin, J. (2002) Competitive swimmers versus sedentary people: 
 a predictive model based upon normal shoulders flexibility. Journal of Human Movement Studies, 43 , 17-34.
 }
 
+\examples{
+data(shoulder)
+with(shoulder,plot(paired(Right,Left),groups=Group))
+}
 
 \keyword{datasets}

@@ -1,31 +1,51 @@
 \name{pitman.morgan.test}
 \alias{pitman.morgan.test}
-\title{Pitman-Morgan test of variances for paired samples}
+\alias{pitman.morgan.test.default}
+\alias{pitman.morgan.test.paired}
+
+\title{
+Pitman-Morgan test of variance for paired samples}
+
 \description{
-Classical test of variance for paired samples based on the bivariate normal distribution
+Classical test of variance for paired samples based on the bivariate normal distribution.
 }
 \usage{
-pitman.morgan.test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
-         omega = 1, conf.level = 0.95)
+pitman.morgan.test(x, ...)
+
+\method{pitman.morgan.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"), 
+    omega = 1, conf.level = 0.95,...)
+
+\method{pitman.morgan.test}{paired}(x, ...)
 }
+
 \arguments{
-  \item{x}{First sample}
-  \item{y}{Second sample}
-  \item{alternative}{Alternative hypothesis}
-  \item{omega}{A priori ratio of variances}
-  \item{conf.level}{Confidence level}
+  \item{x}{
+first sample or an object of class paired.}
+  \item{y}{
+second sample.}
+  
+  \item{alternative}{
+alternative hypothesis.}
+  \item{omega}{
+a priori ratio of variances.}
+
+  \item{conf.level}{
+confidence level.}
+
+  \item{\dots}{
+further arguments to be passed to or from methods.}
 }
 \value{
 A list with class "htest" containing the following components: 
-\item{statistic}{The value of the F-statistic} 
-\item{parameter}{The degrees of freedom for the F-statistic} 
-\item{p.value}{The p-value for the test} 
-\item{conf.int}{A confidence interval for the ratio of variances appropriate to the specified alternative hypothesis} 
-\item{estimate}{The estimated variances} 
-\item{null.value}{The specified hypothesized value of the ratio of variances} 
-\item{alternative}{A character string describing the alternative hypothesis}
-\item{method}{A character string indicating what type of test was performed} 
-\item{data.name}{A character string giving the name(s) of the data}
+\item{statistic}{the value of the F-statistic.} 
+\item{parameter}{the degrees of freedom for the F-statistic.} 
+\item{p.value}{the p-value for the test.} 
+\item{conf.int}{a confidence interval for the ratio of variances appropriate to the specified alternative hypothesis.} 
+\item{estimate}{the estimated variances.} 
+\item{null.value}{the specified hypothesized value of the ratio of variances.} 
+\item{alternative}{a character string describing the alternative hypothesis.}
+\item{method}{a character string indicating what type of test was performed.} 
+\item{data.name}{a character string giving the name(s) of the data.}
 
 }
 \references{
@@ -41,9 +61,11 @@ A list with class "htest" containing the following components:
 \seealso{var.test, bonett.seier.test, grambsch.test}
 
 \examples{
-z<-rnorm(20)
-x<-rnorm(20)+z
-y<-(rnorm(20)+z)*2
-pitman.morgan.test(x,y)
+data(HORSEbegin)
+pitman.morgan.test(HORSEbegin$Actual,HORSEbegin$Imaginary)
+
+p<-with(HORSEbegin,paired(Actual,Imaginary))
+pitman.morgan.test(p)
 }
 \keyword{htest}
+

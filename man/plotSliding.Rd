@@ -1,21 +1,29 @@
 \name{plotSliding}
 \alias{plotSliding}
+\alias{plotSliding,paired-method}
+
 \title{Sliding square plot}
+
 \description{
 Produce a sliding square plot for paired data which mixes the usual scatterplot 
 with the tukey mean-difference plot.
 }
 \usage{
-plotSliding(df,condition1,condition2,xlab = "", ylab = "", ...)
+\S4method{plotSliding}{paired}(object,...)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{object}{
+an object of class paired.
+}
+\item{\dots}{
+arguments to be passed to methods.
+}
 }
 
-\arguments{
-  \item{df}{Data frame}
-  \item{condition1}{name of the variable corresponding to measurements in the "first" condition}
- \item{condition2}{name of the variable corresponding to measurements in the "second" condition}
- \item{xlab}{new label for X axis}
-\item{ylab}{new label for Y axis}
- \item{...}{Arguments to be passed to methods, such as graphical parameters (see par)}
+
+\value{
+A graphical object of class ggplot.
 }
 
 
@@ -30,11 +38,9 @@ plotSliding(df,condition1,condition2,xlab = "", ylab = "", ...)
 
 \author{Stephane CHAMPELY}
 
-\seealso{plotCor, plotBA, plotMcNeil}
+\seealso{plotBA,plotProfiles,plotMcNeil}
 
 \examples{
 data(PrisonStress)
-plotSliding(df=PrisonStress,condition1="PSSbefore",condition2="PSSafter")
-plotSliding(df=PrisonStress,condition1="PSSbefore",condition2="PSSafter",xlab="Before",ylab="After")
-
+with(PrisonStress,plotSliding(paired(PSSbefore,PSSafter)))
 }

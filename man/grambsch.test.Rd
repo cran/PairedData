@@ -1,25 +1,43 @@
 \name{grambsch.test}
 \alias{grambsch.test}
-\title{Grambsch test of scale for paired samples}
+\alias{grambsch.test.default}
+\alias{grambsch.test.paired}
+
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{Grambsch test of scale for paired samples
+}
 \description{
-Robust test of scale for paired samples
-}
+Robust test of scale for paired samples.}
+
 \usage{
-grambsch.test(x, y = NULL, alternative = c("two.sided", "less", "greater"))
+grambsch.test(x, ...)
+
+\method{grambsch.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),...)
+
+\method{grambsch.test}{paired}(x, ...)
 }
+%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{First sample}
-  \item{y}{Second sample}
-  \item{alternative}{Alternative hypothesis}
+  \item{x}{
+first sample or an object of class paired.
+}
+  \item{y}{
+second sample.
+}
+  
+  \item{alternative}{
+alternative hypothesis.}
+  \item{\dots}{
+further arguments to be passed to or from methods.}
 }
 \value{
 A list with class "htest" containing the following components: 
-\item{statistic}{The value of the F-statistic} 
-\item{p.value}{The p-value for the test} 
-\item{null.value}{The specified hypothesized value of the ratio of variances (=1!)} 
-\item{alternative}{A character string describing the alternative hypothesis}
-\item{method}{A character string indicating what type of test was performed} 
-\item{data.name}{A character string giving the name(s) of the data}
+\item{statistic}{the value of the F-statistic.} 
+\item{p.value}{the p-value for the test.} 
+\item{null.value}{the specified hypothesized value of the ratio of variances (=1!)} 
+\item{alternative}{a character string describing the alternative hypothesis.}
+\item{method}{a character string indicating what type of test was performed.} 
+\item{data.name}{a character string giving the name(s) of the data.}
 
 }
 \references{
@@ -35,5 +53,9 @@ z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
 grambsch.test(x,y)
+
+p<-paired(x,y)
+grambsch.test(p)
 }
 \keyword{htest}
+

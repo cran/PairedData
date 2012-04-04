@@ -7,8 +7,8 @@
 \title{Agreement study}
 
 \description{
-This dataset gives the same measurements in 3 days corresponding to a reproductibility study
-for 18 subjects.
+This dataset gives the same measurements of muscle activation (EMG) in 3 days corresponding to a reproductibility study
+for 18 tennis players.
 }
 
 \usage{data(GDO)}

@@ -1,22 +1,33 @@
 \name{plotBA}
 \alias{plotBA}
+\alias{plotBA,paired-method}
+
 \title{Bland-Altman plot}
 \description{
 Produce a Bland-Altman plot for paired data, including a confidence region for the mean of the differences.
 }
 \usage{
-plotBA(df,condition1,condition2,groups=NULL,facet=TRUE,...)
+\S4method{plotBA}{paired}(object,groups=NULL,facet=TRUE,...)
 }
-
+%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{df}{Data frame}
-  \item{condition1}{name of the variable corresponding to measurements in the "first" condition}
- \item{condition2}{name of the variable corresponding to measurements in the "second" condition}
- \item{groups}{name of the variable corresponding to groups}
-\item{facet}{In case of groups, faceting (TRUE) or overplotting (FALSE)}
- \item{...}{Arguments to be passed to methods, such as graphical parameters (see par)}
+  \item{object}{
+an object of class paired.
+}
+  \item{groups}{
+factor corresponding to groups (optional).
+}
+  \item{facet}{
+faceting or grouping strategy for plotting?
 }
 
+\item{\dots}{
+arguments to be passed to methods}
+}
+
+\value{
+a graphical object of class ggplot.
+}
 
 \references{
 \itemize{
@@ -26,13 +37,17 @@ Annual Meeting, October 2007.
 }
 }
 
+
 \author{Stephane CHAMPELY}
 
 \seealso{tmd}
 
 \examples{
 data(PrisonStress)
-plotBA(df=PrisonStress,condition1="PSSbefore",condition2="PSSafter")
-plotBA(df=PrisonStress,condition1="PSSbefore",condition2="PSSafter",groups="Group")
-plotBA(df=PrisonStress,condition1="PSSbefore",condition2="PSSafter",groups="Group",facet=FALSE)
+with(PrisonStress,plotBA(paired(PSSbefore,PSSafter)))
+with(PrisonStress,plotBA(paired(PSSbefore,PSSafter),
+groups=Group))
+with(PrisonStress,plotBA(paired(PSSbefore,PSSafter),
+groups=Group,facet=FALSE))
 }
+

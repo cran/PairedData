@@ -7,7 +7,7 @@
 \title{IceSkating speed study}
 
 \description{
-This dataset gives the speed measurement for 7 iceskating dancers using the return leg in flexion
+This dataset gives the speed measurement (m/sec) for seven iceskating dancers using the return leg in flexion
 or in extension.
 }
 
@@ -21,7 +21,7 @@ or in extension.
 }
 }
 
-\source{Private communication. Karine Monteil, CRIS, Lyon 1 University, FRANCE}
+\source{Private communication. Karine Monteil, CRIS, Lyon 1 University, FRANCE.}
 
 \references{
 Haguenauer, M., Legreneur, P., Colloud, F. and Monteil, K.M. Characterisation of

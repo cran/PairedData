@@ -10,7 +10,7 @@
 This dataset presents four sets of paired samples (n=15), giving the same t statistic (t=2.11) and thus the same
 p-value whereas their situations are really different (differences in variances, clustering, heteroscedasticity). 
 The importance of plotting data is thus stressed.
-The name is given from the famous dataset of Anscombe created to study simple linear regression.
+The name is given from the famous Anscombe's dataset created to study simple linear regression.
 }
 
 \usage{data(anscombe2)}
