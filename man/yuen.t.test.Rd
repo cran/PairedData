@@ -1,8 +1,8 @@
-\name{yuen.test}
-\alias{yuen.test}
-\alias{yuen.test.default}
-\alias{yuen.test.formula}
-\alias{yuen.test.paired}
+\name{yuen.t.test}
+\alias{yuen.t.test}
+\alias{yuen.t.test.default}
+\alias{yuen.t.test.formula}
+\alias{yuen.t.test.paired}
 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
@@ -12,14 +12,14 @@ Yuen's trimmed mean test
 Yuen's test for one, two or paired samples.
 }
 \usage{
-yuen.test(x, ...)
+yuen.t.test(x, ...)
 
-\method{yuen.test}{default}(x, y = NULL, tr = 0.2, alternative = c("two.sided", "less", "greater"),
+\method{yuen.t.test}{default}(x, y = NULL, tr = 0.2, alternative = c("two.sided", "less", "greater"),
 mu = 0, paired = FALSE, conf.level = 0.95, ...)
 
-\method{yuen.test}{formula}(formula, data, subset, na.action, ...)
+\method{yuen.t.test}{formula}(formula, data, subset, na.action, ...)
 
-\method{yuen.test}{paired}(x, ...)
+\method{yuen.t.test}{paired}(x, ...)
 }
 
 \arguments{
@@ -81,11 +81,11 @@ A list with class "htest" containing the following components:
 \references{
 \itemize{
 \item Wilcox, R.R. (2005). Introduction to robust estimation and hypothesis testing. Academic Press.
-\item Yuen K.K. (1974) The two-sample trimmed t for unequal population variances. Biometrika, 61, 165-170.
+\item Yuen, K.K. (1974) The two-sample trimmed t for unequal population variances. Biometrika, 61, 165-170.
 }
 }
 
-\author{Stephane CHAMPELY}
+\author{Stephane CHAMPELY, but some part are mere copy of the code of Wilcox (WRS)}
 
 
 \seealso{t.test}
@@ -96,16 +96,16 @@ x<-rnorm(20)+z
 y<-rnorm(20)+z+1
 
 # two-sample test
-yuen.test(x,y)
+yuen.t.test(x,y)
 
 # one-sample test
-yuen.test(x)
+yuen.t.test(y,mu=1,tr=0.25)
 
 # paired-sample tests
-yuen.test(x,y,paired=TRUE)
+yuen.t.test(x,y,paired=TRUE)
 
 p<-paired(x,y)
-yuen.test(p)
+yuen.t.test(p)
 }
 
 \keyword{htest}

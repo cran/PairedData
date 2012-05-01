@@ -38,120 +38,95 @@ object
 
 setMethod("summary",
           signature(object = "paired"),
-          function(object){
-if(is.numeric(object[,1])){paired.summary(object[,1],object[,2])} else
-{summary.data.frame(object)}
+          function(object,tr=0.2){
+if(is.numeric(object[,1])){
+X<-paired.summary(object[,1],object[,2],tr=tr)
+rownames(X)<-c(paste(colnames(object)[1]," (x)",sep=""),paste(colnames(object)[2]," (y)",sep=""),"x-y","(x+y)/2")
+Y<-matrix(numeric(2),ncol=2,nrow=1)
+rownames(Y)<-"(x,y)"
+colnames(Y)<-c("cor","wcor")
+Y[1,1]<-cor(object[,1],object[,2])
+Y[1,2]<-wincor(object[,1],object[,2],tr=tr)$cor
+list(stat=X,cor=Y)
+} 
+else{
+summary.data.frame(object)}
           }
 )
 
 
+
 setMethod(f="effect.size", 
 signature(object = "paired"),
-  definition=function(object){
+  definition=function(object,tr=0.2){
 if(!is.numeric(object[,1])){return("only suitable to numeric paired data")}
-paired.effect.size(object[,1],object[,2])
+paired.effect.size(object[,1],object[,2],tr=tr)
 }
 )
 
 setMethod("plot", signature="paired",
-  function(x,groups=NULL,facet=TRUE,...){
+  function(x,groups=NULL,subjects=NULL,facet=TRUE,type=c("correlation","BA","McNeil","profile"),...){
+# plot type
+type <- match.arg(type)
+
+# paired object
 df<-x
 if(is.null(colnames(df))){colnames(df)<-c("C1","C2")}
 conditions<-colnames(df)
+
+# subjects
+if(is.null(subjects)){
+n<-dim(df)[1]
+subjects<-factor(paste("S",1:n,sep=""))
+df<-data.frame(df,subjects)
+}
+else{
+df<-data.frame(df,subjects)
+name.subjects<-deparse(substitute(subjects))
+colnames(df)[3]<-name.subjects 
+}
+
 if(!is.null(groups)){
-df<-data.frame(df,groups)	
-paired.plotCor(df,conditions[1],conditions[2],groups=colnames(df)[3],facet=facet,...)
-}
-else{
-paired.plotCor(df,conditions[1],conditions[2],groups=NULL,facet=facet,...)
-}
-}
-)
-
-setMethod(f="plotBA", 
-signature(object = "paired"),
-  definition=function(object,groups=NULL,facet=TRUE,...){
-if(!is.numeric(object[,1])){return("only suitable to numeric paired data")}
-if(is.null(groups)){
-df<-object
-condition1<-colnames(df)[1]
-condition2<-colnames(df)[2]
-return(paired.plotBA(df, condition1, condition2, groups = NULL, facet = facet,...))
-}
-else{
-df<-data.frame(object,groups)
-condition1<-colnames(df)[1]
-condition2<-colnames(df)[2]
-colnames(df)[3]<-deparse(substitute(groups))
-groups<-colnames(df)[3]
-return(paired.plotBA(df, condition1, condition2, groups, facet = facet,...))
-}
-}
-)
-
-setMethod(f="plotMcNeil", 
-signature(object = "paired"),
-  definition=function(object,groups=NULL,subjects=NULL,facet=TRUE,...){
-if(!is.numeric(object[,1])){return("only suitable to numeric paired data")}
-
-df<-object
-condition1<-colnames(df)[1]
-condition2<-colnames(df)[2]
-
-if(is.null(subjects)){
-n<-dim(df)[1]
-subjects<-factor(paste("S",1:n,sep=""))
-df<-data.frame(df,subjects)
-}
-else{
-df<-data.frame(df,subjects)
-}
-
-if(is.null(groups)){
-return(paired.plotMcNeil(df, condition1, condition2, groups = NULL,subjects=colnames(df)[3], facet = facet,...))
-}
-else{
+# with groups
 df<-data.frame(df,groups)
 colnames(df)[4]<-deparse(substitute(groups))
-groups<-colnames(df)[4]
-return(paired.plotMcNeil(df, condition1, condition2, groups,subjects=colnames(df)[3], facet = facet,...))
+if(type=="correlation"){
+return(paired.plotCor(df,conditions[1],conditions[2],groups=colnames(df)[4],facet=facet,...))}
+if(type=="BA"){
+return(paired.plotBA(df, conditions[1], conditions[2], groups = colnames(df)[4], facet = facet,...))
+}
+if(type=="McNeil"){
+return(paired.plotMcNeil(df, conditions[1], conditions[2], groups = colnames(df)[4], subjects= colnames(df)[3],facet = facet,...))
+}
+if(type=="profile"){
+return(paired.plotProfiles(df, conditions[1], conditions[2], groups = colnames(df)[4], subjects= colnames(df)[3],facet = facet,...))
+}
+
+}
+else{
+# without groups
+if(type=="correlation"){
+return(paired.plotCor(df,conditions[1],conditions[2],groups=NULL,
+facet=facet,...))}
+if(type=="BA"){
+return(paired.plotBA(df, conditions[1], conditions[2], groups = NULL, facet = facet,...))
+}
+if(type=="McNeil"){
+return(paired.plotMcNeil(df, conditions[1], conditions[2], groups = NULL, subjects= colnames(df)[3],facet = facet,...))
+}
+if(type=="profile"){
+return(paired.plotProfiles(df, conditions[1], conditions[2], groups = NULL, subjects= colnames(df)[3],facet = facet,...))
+}
+
+
+
 }
 }
 )
 
-setMethod(f="plotProfiles", 
-signature(object = "paired"),
-  definition=function(object,groups=NULL,subjects=NULL,facet=TRUE,...){
-if(!is.numeric(object[,1])){return("only suitable to numeric paired data")}
-
-df<-object
-condition1<-colnames(df)[1]
-condition2<-colnames(df)[2]
-
-if(is.null(subjects)){
-n<-dim(df)[1]
-subjects<-factor(paste("S",1:n,sep=""))
-df<-data.frame(df,subjects)
-}
-else{
-df<-data.frame(df,subjects)
-}
-
-if(is.null(groups)){
-return(paired.plotProfiles(df, condition1, condition2, groups = NULL,subjects=colnames(df)[3], facet = facet,...))
-}
-else{
-df<-data.frame(df,groups)
-colnames(df)[4]<-deparse(substitute(groups))
-groups<-colnames(df)[4]
-return(paired.plotProfiles(df, condition1, condition2, groups,subjects=colnames(df)[3], facet = facet,...))
-}
-}
-)
 
 
-
-setMethod(f="plotSliding", 
+setMethod(f="slidingchart", 
 signature="paired",
   definition=function(object,...){
 if(!is.numeric(object[,1])){return("only suitable to numeric paired data")}
@@ -159,7 +134,7 @@ if(!is.numeric(object[,1])){return("only suitable to numeric paired data")}
 df<-object
 condition1<-colnames(df)[1]
 condition2<-colnames(df)[2]
-return(paired.plotSliding(df, condition1, condition2,...))
+return(paired.slidingchart(df, condition1, condition2,...))
 
 }
 )

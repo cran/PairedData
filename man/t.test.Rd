@@ -42,7 +42,7 @@ Stephane Champely
 
 
 \seealso{
-yuen.test
+yuen.t.test
 }
 
 \examples{

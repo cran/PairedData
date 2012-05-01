@@ -1,14 +1,21 @@
 \name{PairedData-internal}
 \title{Internal PairedData objects}
 
+\alias{var1.test}
+\alias{var2.test}
+
 
 \alias{validPairedObject}
+
+\alias{winvar.Z}
 
 \alias{winval}
 
 \alias{wincor}
 
 \alias{winvar}
+
+\alias{summaryhelper}
 
 \alias{unroll}
 
@@ -22,11 +29,7 @@
 
 \alias{paired.effect.size}
 
-\alias{paired.plotBA}
-\alias{paired.plotCor}
-\alias{paired.plotMcNeil}
-\alias{paired.plotProfiles}
-\alias{paired.plotSliding}
+\alias{paired.slidingchart}
 
 
 

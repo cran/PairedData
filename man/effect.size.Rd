@@ -6,11 +6,12 @@
 Robust and classical effects sizes for paired samples of the form: (Mx-My)/S where Mx and My are location parameters for each sample and S is a scale parameter
 }
 \usage{
-\S4method{effect.size}{paired}(object)
+\S4method{effect.size}{paired}(object,tr=0.2)
 }
 
 \arguments{
-  \item{object}{An object of class paired}
+  \item{object}{an object of class paired}
+\item{tr}{percentage of trimming}
 }
 
 \value{
@@ -24,8 +25,8 @@ A table with two rows corresponding to classical (means) and robust (trimmed mea
 
 \author{Stephane CHAMPELY}
 
-\references{J. Algina, H.J. Keselman and R.D. Penfield. Effects sizes and their intervals: 
-the two-level repeated measures case. Educational and Psychological Measurement, 65, 241-258, 2005.}
+\references{Algina, J., Keselman, H.J. and Penfield, R.D. (2005) Effects sizes and their intervals: 
+the two-level repeated measures case. Educational and Psychological Measurement, 65, 241-258.}
 
 \examples{
 z<-rnorm(20)

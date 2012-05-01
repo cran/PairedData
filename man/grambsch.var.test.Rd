@@ -1,7 +1,7 @@
-\name{grambsch.test}
-\alias{grambsch.test}
-\alias{grambsch.test.default}
-\alias{grambsch.test.paired}
+\name{grambsch.var.test}
+\alias{grambsch.var.test}
+\alias{grambsch.var.test.default}
+\alias{grambsch.var.test.paired}
 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Grambsch test of scale for paired samples
@@ -10,11 +10,11 @@
 Robust test of scale for paired samples.}
 
 \usage{
-grambsch.test(x, ...)
+grambsch.var.test(x, ...)
 
-\method{grambsch.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),...)
+\method{grambsch.var.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),...)
 
-\method{grambsch.test}{paired}(x, ...)
+\method{grambsch.var.test}{paired}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -40,22 +40,27 @@ A list with class "htest" containing the following components:
 \item{data.name}{a character string giving the name(s) of the data.}
 
 }
+
+\details{
+Denoting s=x+y and d=x-y, the test proposed by Grambsch (1994, and called by the author 'modified Pitman test') is based on the fact that var(x)-var(y)=cov(x+y,x-y)=cov(s,d). The values z=(s-mean(s))(d-mean(d)) can be tested for null expectation using a classical t test in order to compare the two variances. Note that the p value is computed using the normal distribution.
+}
+
 \references{
-P.M. Grambsch. Simple robust tests for scale differences in paired data. Biometrika, 81, 359-372, 1994.
+Grambsch,P.M. (1994) Simple robust tests for scale differences in paired data. Biometrika, 81, 359-372.
 }
 \author{Stephane CHAMPELY}
 
 
-\seealso{var.test, pitman.morgan.test, bonett.seier.test}
+\seealso{var.test, bonettseier.var.test}
 
 \examples{
 z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
-grambsch.test(x,y)
+grambsch.var.test(x,y)
 
 p<-paired(x,y)
-grambsch.test(p)
+grambsch.var.test(p)
 }
 \keyword{htest}
 

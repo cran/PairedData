@@ -1,15 +1,11 @@
 #### Les fonctions generiques
 
+setGeneric(name="summary",def=function(object,...){standardGeneric("summary")})
 
-setGeneric(name="effect.size",def=function(object){standardGeneric("effect.size")})
 
-setGeneric(name="plotBA",def=function(object,...){standardGeneric("plotBA")})
+setGeneric(name="effect.size",def=function(object,...){standardGeneric("effect.size")})
 
-setGeneric(name="plotMcNeil",def=function(object,...){standardGeneric("plotMcNeil")})
-
-setGeneric(name="plotProfiles",def=function(object,...){standardGeneric("plotProfiles")})
-
-setGeneric(name="plotSliding",def=function(object,...){standardGeneric("plotSliding")})
+setGeneric(name="slidingchart",def=function(object,...){standardGeneric("slidingchart")})
 
 
 
@@ -23,69 +19,43 @@ setGeneric(name="plotSliding",def=function(object,...){standardGeneric("plotSlid
 
 ### Les fonctions classiques
 
-paired.summary<-
-function (x, y) 
-{
-    tt <- matrix(numeric(44), nrow = 4)
-    X <- x
-    Y <- y
-    xname<-deparse(substitute(x))
-    yname<-deparse(substitute(y))
-    x <- X[!is.na(X)]
-    tt[1, 1] <- length(x)
-    tt[1, 2] <- mean(x)
-    tt[1, 3] <- median(x)
-    tt[1, 4] <- mean(x, 0.2)
-    tt[1, 5] <- sd(x)
-    tt[1, 6] <- IQR(x)/1.349
-    tt[1, 7] <- mad(x)
-    tt[1, 8] <- mean(abs(x - median(x))) * sqrt(pi/2)
-    tt[1, 9] <- sqrt(winvar(x))/0.6421
-    tt[1, 10] <- min(x)
-    tt[1, 11] <- max(x)
-    y <- Y[!is.na(Y)]
-    tt[2, 1] <- length(y)
-    tt[2, 2] <- mean(y)
-    tt[2, 3] <- median(y)
-    tt[2, 4] <- mean(y, 0.2)
-    tt[2, 5] <- sd(y)
-    tt[2, 6] <- IQR(y)/1.349
-    tt[2, 7] <- mad(y)
-    tt[2, 8] <- mean(abs(y - median(y))) * sqrt(pi/2)
-    tt[2, 9] <- sqrt(winvar(y))/0.6421
-    tt[2, 10] <- min(y)
-    tt[2, 11] <- max(y)
-    xok <- yok <- complete.cases(X, Y)
-    x <- X[xok]
-    y <- Y[yok]
-    tt[3, 1] <- length(x - y)
-    tt[3, 2] <- mean(x - y)
-    tt[3, 3] <- median(x - y)
-    tt[3, 4] <- mean(x - y, 0.2)
-    tt[3, 5] <- sd(x - y)
-    tt[3, 6] <- IQR(x - y)/1.349
-    tt[3, 7] <- mad(x - y)
-    tt[3, 8] <- mean(abs(x - y - median(x - y))) * sqrt(pi/2)
-    tt[3, 9] <- sqrt(winvar(x - y))/0.6421
-    tt[3, 10] <- min(x - y)
-    tt[3, 11] <- max(x - y)
-    tt[4, 1] <- length((x + y)/2)
-    tt[4, 2] <- mean((x + y)/2)
-    tt[4, 3] <- median((x + y)/2)
-    tt[4, 4] <- mean((x + y)/2, 0.2)
-    tt[4, 5] <- sd((x + y)/2)
-    tt[4, 6] <- IQR((x + y)/2)/1.349
-    tt[4, 7] <- mad((x + y)/2)
-    tt[4, 8] <- mean(abs((x + y)/2 - median((x + y)/2))) * sqrt(pi/2)
-    tt[4, 9] <- sqrt(winvar((x + y)/2))/0.6421
-    tt[4, 10] <- min((x + y)/2)
-    tt[4, 11] <- max((x + y)/2)
-    colnames(tt) <- c("n", "mean", "median", "trim", "sd", "IQR (*)", 
-        "median ad (*)", "mean ad (*)", "sd(w)", "min", "max")
-    rownames(tt) <- c("x","y", "x-y", "(x+y)/2")
-    tt
+
+winvar.Z<-
+function(tr=0.2){
+if(tr>=0.5){return(0)}
+else{
+if(tr<=0){return(1)}
+else{
+f<-function(x){x^2*dnorm(x)}
+integrate(f,lower=qnorm(tr),upper=qnorm(1-tr))$value+2*tr*qnorm(tr)^2
+}
+}
 }
 
+summaryhelper<-function(x,tr=0.2){
+res<-numeric(11)
+res[1]<-length(x)
+res[2]<- mean(x)
+res[3] <- median(x)
+res[4] <- mean(x, tr=tr)
+res[5] <- sd(x)
+res[6] <- IQR(x)/1.349
+res[7] <- mad(x)
+res[8] <- mean(abs(x - median(x))) * sqrt(pi/2)
+res[9] <- sqrt(winvar(x,tr=tr))/sqrt(winvar.Z(tr=tr))
+res[10] <- min(x)
+res[11] <- max(x)
+names(res) <- c("n", "mean", "median", "trim", "sd", "IQR (*)", 
+        "median ad (*)", "mean ad (*)", "sd(w)", "min", "max")
+return(res)
+}
+
+
+paired.summary<-function(x,y,tr=0.2){
+X<-rbind(summaryhelper(x,tr=tr),summaryhelper(y,tr=tr),summaryhelper(x-y,tr=tr),summaryhelper((x+y)/2,tr=tr))
+rownames(X)<-c(paste(deparse(substitute(x)),"(x)",sep=""),paste(deparse(substitute(y)),"(y)",sep=""),"x-y","(x+y)/2")
+X
+}
 
 
 winvar<-
@@ -353,9 +323,9 @@ function (x, y = NULL, tr = 0.2, alternative = c("two.sided", "less", "greater")
     return(rval)
 }
 
-yuen.test<-function(x,...) UseMethod("yuen.test")
+yuen.t.test<-function(x,...) UseMethod("yuen.t.test")
 
-yuen.test.default<-
+yuen.t.test.default<-
 function (x, y = NULL, tr=0.2, alternative = c("two.sided", "less", "greater"), 
     mu = 0, paired=FALSE,conf.level = 0.95,...){
 if(paired){h<-yuenp.test(x=x, y = y, tr = tr,alternative = alternative, 
@@ -372,7 +342,7 @@ return(h)
 
 
 
-yuen.test.formula <-
+yuen.t.test.formula <-
 function(formula, data, subset, na.action, ...)
 {
     if(missing(formula)
@@ -393,7 +363,7 @@ function(formula, data, subset, na.action, ...)
         stop("grouping factor must have exactly 2 levels")
     DATA <- split(mf[[response]], g)
     names(DATA) <- c("x", "y")
-    y <- do.call("yuen.test", c(DATA, list(...)))
+    y <- do.call("yuen.t.test", c(DATA, list(...)))
     y$data.name <- DNAME
     if(length(y$estimate) == 2L)
         names(y$estimate) <- paste("trimmed mean in group", levels(g))
@@ -403,25 +373,22 @@ function(formula, data, subset, na.action, ...)
 
 
 
-yuen.test.paired <-
+yuen.t.test.paired <-
 function(x,...)
 {
     if(!is.numeric(x[,1])){return("yuen.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("yuen.test", c(DATA, paired=TRUE,list(...)))
+    y <- do.call("yuen.t.test", c(DATA, paired=TRUE,list(...)))
 y$data.name <- DNAME
     y
 }
 
 
 
-
-
-
 paired.effect.size<-
-function (x, y) 
+function (x, y,tr=0.2) 
 {
     tt <- matrix(numeric(8), nrow = 2)
     tt[1, 1] <- (mean(x) - mean(y))/sqrt((sd(x)^2 + sd(y)^2)/2)
@@ -429,14 +396,15 @@ function (x, y)
     tt[1, 3] <- (mean(x) - mean(y))/sd(y)
     d <- x - y
     tt[1, 4] <- mean(d)/sd(d)
-    Vx <- winvar(x, tr = 0.2)
-    Vy <- winvar(y, tr = 0.2)
-    Vd <- winvar(d, tr = 0.2)
-    tt[2, 1] <- 0.642 * (mean(x, tr = 0.2) - mean(y, tr = 0.2))/sqrt((Vx + 
+    Vx <- winvar(x, tr = tr)
+    Vy <- winvar(y, tr = tr)
+    Vd <- winvar(d, tr = tr)
+        std<-sqrt(winvar.Z(tr=tr))
+    tt[2, 1] <- std * (mean(x, tr = tr) - mean(y, tr = tr))/sqrt((Vx + 
         Vy)/2)
-    tt[2, 2] <- 0.642 * (mean(x, tr = 0.2) - mean(y, tr = 0.2))/sqrt(Vx)
-    tt[2, 3] <- 0.642 * (mean(x, tr = 0.2) - mean(y, tr = 0.2))/sqrt(Vy)
-    tt[2, 4] <- 0.642 * mean(d, tr = 0.2)/sqrt(Vd)
+    tt[2, 2] <- std * (mean(x, tr = tr) - mean(y, tr = tr))/sqrt(Vx)
+    tt[2, 3] <- std * (mean(x, tr = tr) - mean(y, tr = tr))/sqrt(Vy)
+    tt[2, 4] <- std * mean(d, tr = tr)/sqrt(Vd)
     colnames(tt) <- c("Average", "Single (x)", "Single (y)", 
         "Difference")
     rownames(tt) <- c("OLS", "Robust")
@@ -455,7 +423,7 @@ formula<-paste(groups,"~.",sep="")
 plotP+geom_point()+coord_equal()+ geom_abline(intercept =0, slope =1)+facet_grid(formula)
 }
 else{
-plotP+geom_point()+coord_equal()+ geom_abline(intercept =0, slope =1)+aes_string(colour=groups)
+plotP+geom_point()+coord_equal()+ geom_abline(intercept =0, slope =1)+aes_string(colour=groups)+ scale_colour_discrete(name = groups)
 }
 }
 }
@@ -463,14 +431,14 @@ plotP+geom_point()+coord_equal()+ geom_abline(intercept =0, slope =1)+aes_string
 
 ###une fonction de test
 
-pitman.morgan.test<-function(x,...) UseMethod("pitman.morgan.test")
+# pitman.morgan.test<-function(x,...) UseMethod("pitman.morgan.test")
 
 pitman.morgan.test.default<-function (x, y = NULL, alternative = c("two.sided", "less", "greater"), 
-    omega = 1, conf.level = 0.95,...) 
+    ratio = 1, conf.level = 0.95,...) 
 {
     alternative <- match.arg(alternative)
-    if (!missing(omega) && (length(omega) != 1 || is.na(omega))) 
-        stop("'omega' must be a single number")
+    if (!missing(ratio) && (length(ratio) != 1 || is.na(ratio))) 
+        stop("' ratio ' must be a single number")
     if (!missing(conf.level) && (length(conf.level) != 1 || !is.finite(conf.level) || 
         conf.level < 0 || conf.level > 1)) 
         stop("'conf.level' must be a single number between 0 and 1")
@@ -490,8 +458,8 @@ pitman.morgan.test.default<-function (x, y = NULL, alternative = c("two.sided", 
     Var1 <- var(x)
     Var2 <- var(y)
     w <- var(x)/var(y)
-    stat.t <- ((w - omega) * sqrt(n - 2))/sqrt(4 * (1 - r^2) * 
-        w * omega)
+    stat.t <- ((w - ratio) * sqrt(n - 2))/sqrt(4 * (1 - r^2) * 
+        w * ratio)
     if (alternative == "two.sided") {
         k <- qt(1 - alpha/2, df = n - 2)
         K <- 1 + (2 * (1 - r^2) * k^2)/(n - 2)
@@ -520,33 +488,156 @@ pitman.morgan.test.default<-function (x, y = NULL, alternative = c("two.sided", 
     names(estimate) <- c("variance of x", "variance of y")
     names(tstat) <- "t"
     names(df) <- "df"
-    names(omega) <- c("ratio of variances")
+    names(ratio) <- c("ratio of variances")
     attr(cint, "conf.level") <- conf.level
     rval <- list(statistic = tstat, parameter = df, p.value = pval, 
-        conf.int = cint, estimate = estimate, null.value = omega, 
+        conf.int = cint, estimate = estimate, null.value = ratio, 
         alternative = alternative, method = method, data.name = dname)
     class(rval) <- "htest"
     return(rval)
 }
 
 
-pitman.morgan.test.paired <-
+
+var.test.paired <-
 function(x,...)
 {
-    if(!is.numeric(x[,1])){return("pitman.morgan.test is only suitable to numeric paired data")}
+    if(!is.numeric(x[,1])){return("var.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("pitman.morgan.test", c(DATA, list(...)))
+    y <- do.call("pitman.morgan.test.default", c(DATA,list(...)))
+y$data.name <- DNAME
+    y
+}
+
+# pitman.morgan.test.paired <-
+# function(x,...)
+# {
+#    if(!is.numeric(x[,1])){return("pitman.morgan.test is only suitable
+# to numeric paired data")}
+#    DATA <- x
+#DNAME <- paste(names(DATA), collapse = " and ")
+#    names(DATA) <- c("x", "y")
+#    y <- do.call("pitman.morgan.test", c(DATA, list(...)))
+# y$data.name <- DNAME
+#    y
+# }
+
+winsor.cor.test<-function(x,...) UseMethod("winsor.cor.test")
+
+winsor.cor.test.default <-
+function(x,y,tr=0.2,alternative = c("two.sided", "less", "greater"),...)
+{
+alternative <- match.arg(alternative)
+
+method <- paste("winsorized correlation, trim=",tr,sep="")   
+
+NVAL <- 0
+names(NVAL)<-"(winsorized) correlation"
+
+DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+
+xx<-x
+yy<-y
+g<-floor(tr*length(xx))
+xvec<-winval(xx,tr)
+yvec<-winval(yy,tr)
+wcor<-cor(xvec,yvec)
+
+
+ESTIMATE <- c(cor = wcor)
+PARAMETER <- c(df = length(xx)-2*g-2)
+STATISTIC <- c(t=wcor*sqrt((length(xx)-2)/(1.-wcor^2)))
+
+PVAL <-switch(alternative,
+              "two.sided" = 2*(1-pt(abs(STATISTIC),length(xx)-2*g-2)),
+              "greater" = 1-pt(STATISTIC,length(xx)-2*g-2),
+              "less" = pt(STATISTIC,length(xx)-2*g-2))
+
+
+RVAL <- list(statistic = STATISTIC,
+                 parameter = PARAMETER,
+                 p.value = as.numeric(PVAL),
+                 estimate = ESTIMATE,
+                 null.value = NVAL,
+                 alternative = alternative,
+                 method = method,
+                 data.name = DNAME)
+    
+    class(RVAL) <- "htest"
+    RVAL
+
+}
+
+
+winsor.cor.test.paired <-
+function(x,tr=0.2,alternative = c("two.sided", "less", "greater"),...)
+{
+alternative <- match.arg(alternative)
+
+method <- paste("winsorized correlation, trim=",tr,sep="")   
+
+NVAL <- 0
+names(NVAL)<-"(winsorized) correlation"
+
+DNAME <- paste(names(x), collapse = " and ")
+
+xx<-x[,1]
+yy<-x[,2]
+g<-floor(tr*length(xx))
+xvec<-winval(xx,tr)
+yvec<-winval(yy,tr)
+wcor<-cor(xvec,yvec)
+
+
+ESTIMATE <- c(cor = wcor)
+PARAMETER <- c(df = length(xx)-2*g-2)
+STATISTIC <- c(t=wcor*sqrt((length(xx)-2)/(1.-wcor^2)))
+
+PVAL <-switch(alternative,
+              "two.sided" = 2*(1-pt(abs(STATISTIC),length(xx)-2*g-2)),
+              "greater" = 1-pt(STATISTIC,length(xx)-2*g-2),
+              "less" = pt(STATISTIC,length(xx)-2*g-2))
+
+
+RVAL <- list(statistic = STATISTIC,
+                 parameter = PARAMETER,
+                 p.value = as.numeric(PVAL),
+                 estimate = ESTIMATE,
+                 null.value = NVAL,
+                 alternative = alternative,
+                 method = method,
+                 data.name = DNAME)
+    
+    class(RVAL) <- "htest"
+    RVAL
+
+}
+
+
+
+
+wilcox.test.paired <-
+function(x,...)
+{
+    if(!is.numeric(x[,1])){return("t.test is only suitable to numeric paired data")}
+    DATA <- x
+DNAME <- paste(names(DATA), collapse = " and ")
+    names(DATA) <- c("x", "y")
+    y <- do.call("wilcox.test", c(DATA, paired=TRUE,list(...)))
 y$data.name <- DNAME
     y
 }
 
 
-bonett.seier.test<-function(x,...) UseMethod("bonett.seier.test")
 
 
-bonett.seier.test.default<-
+
+bonettseier.var.test<-function(x,...) UseMethod("bonettseier.var.test")
+
+
+bonettseier.var.test.default<-
 function (x, y = NULL, alternative = c("two.sided", "less", "greater"), 
     omega = 1, conf.level = 0.95,...) 
 {
@@ -621,14 +712,14 @@ function (x, y = NULL, alternative = c("two.sided", "less", "greater"),
 
 
 
-bonett.seier.test.paired <-
+bonettseier.var.test.paired <-
 function(x,...)
 {
     if(!is.numeric(x[,1])){return("bonett.seier.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("bonett.seier.test", c(DATA, list(...)))
+    y <- do.call("bonettseier.var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }
@@ -637,10 +728,10 @@ y$data.name <- DNAME
 
 ### Encore un autre
 
-grambsch.test<-function(x,...) UseMethod("grambsch.test")
+grambsch.var.test<-function(x,...) UseMethod("grambsch.var.test")
 
 
-grambsch.test.default<-
+grambsch.var.test.default<-
 function (x, y = NULL, alternative = c("two.sided", "less", "greater"),...) 
 {
     alternative <- match.arg(alternative)
@@ -678,14 +769,14 @@ function (x, y = NULL, alternative = c("two.sided", "less", "greater"),...)
     return(rval)
 }
 
-grambsch.test.paired <-
+grambsch.var.test.paired <-
 function(x,...)
 {
     if(!is.numeric(x[,1])){return("grambsch.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("grambsch.test", c(DATA, list(...)))
+    y <- do.call("grambsch.var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }
@@ -697,28 +788,30 @@ paired.plotBA<-
 function (df, condition1, condition2, groups = NULL, facet = TRUE, 
     ...) 
 {
+    name.mean<-paste("(",condition1,"+",condition2,")/2",sep="")
+    name.difference<-paste(condition2,"-",condition1,sep="")
     df2 <- df
     df2$M <- (df[, condition1] + df[, condition2])/2
     df2$D <- (df[, condition2] - df[, condition1])
     plotP <- ggplot(data = df2) + aes(x = M, y = D)
     if (is.null(groups)) {
         plotP + geom_point() + geom_abline(intercept = 0, slope = 0) + 
-            geom_smooth(method = "lm", formula = "y~1") + xlab("Mean") + 
-            ylab("Difference")
+            geom_smooth(method = "lm", formula = "y~1") + xlab(name.mean) + 
+            ylab(name.difference)
     }
     else {
         if (facet) {
             formula <- paste(groups, "~.", sep = "")
             plotP + geom_point() + geom_abline(intercept = 0, 
                 slope = 0) + geom_smooth(method = "lm", formula = "y~1", 
-                fullrange = TRUE) + xlab("Mean") + ylab("Difference") + 
+                fullrange = TRUE) + xlab(name.mean) + ylab(name.difference) + 
                 facet_grid(formula)
         }
         else {
             plotP + geom_point() + geom_abline(intercept = 0, 
                 slope = 0) + geom_smooth(method = "lm", formula = "y~1", 
                 fullrange = TRUE) + aes_string(colour = groups, 
-                fill = groups) + xlab("Mean") + ylab("Difference")
+                fill = groups) + xlab(name.mean) + ylab(name.difference)
         }
     }
 }
@@ -727,6 +820,7 @@ paired.plotMcNeil<-
 function(df, condition1, condition2, groups = NULL, subjects,
     facet = TRUE, ...) 
 {
+
     if (is.null(groups)) {
         df2 <- unroll(df, condition1, condition2, subjects)
     }
@@ -735,20 +829,23 @@ function(df, condition1, condition2, groups = NULL, subjects,
             groups)
     }
     df2[, "Subjects"] <- reorder(df2[, "Subjects"], df2[, "Measurements"])
+df2[, "Conditions"]<-ordered(df2[, "Conditions"],levels=c(condition1,condition2))
+ 
     plotP <- ggplot(data = df2) + aes_string(x = "Measurements", 
         y = "Subjects", group = "Subjects")
     if (is.null(groups)) {
-        plotP + geom_point() + aes_string(colour = "Conditions")
+        plotP + geom_point() + aes_string(colour = "Conditions")+xlab("")+ opts(legend.key = theme_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
     }
     else {
         if (facet) {
             formula <- "Groups~."
             plotP + geom_point() + aes_string(colour = "Conditions") + 
-                facet_grid(formula, scales = "free_y")
+                facet_grid(formula, scales = "free_y")+xlab("")+ opts(legend.key = theme_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
         }
         else {
             plotP + geom_point() + aes_string(colour = "Conditions") + 
-                aes_string(shape = "Groups")
+                aes_string(shape = "Groups")+xlab("")+ opts(legend.key = theme_rect())+ scale_colour_discrete(name = "")+ylab(subjects)+ scale_shape_discrete(name=groups)
+
         }
     }
 }
@@ -769,17 +866,19 @@ function (df, condition1, condition2, groups = NULL,subjects,
         y = "Measurements", group = "Subjects")
     if (is.null(groups)) {
         plotP + geom_boxplot(aes(group = NULL), width = 0.1) + 
-            geom_line()
+            geom_line()+xlab("")+ylab("")+xlim(c(condition1,condition2))
     }
     else {
         if (facet) {
             formula <- "Groups~."
             plotP + geom_boxplot(aes(group = NULL), width = 0.1) + 
-                geom_line() + facet_grid(formula)
+                geom_line() + facet_grid(formula) +xlab("")+ylab("")+xlim(c(condition1,condition2))
         }
         else {
             plotP + geom_boxplot(aes(group = NULL), width = 0.1) + 
-                geom_line(aes_string(colour = "Groups")) + aes_string(fill = "Groups")
+                geom_line(aes_string(colour = "Groups"))+
+		  aes_string(fill = "Groups")+xlab("")+ylab("")+
+			scale_fill_discrete(name=groups)+ scale_colour_discrete(name=groups) +xlim(c(condition1,condition2))
         }
     }
 }
@@ -787,7 +886,7 @@ function (df, condition1, condition2, groups = NULL,subjects,
 
 
 
-paired.plotSliding<-
+paired.slidingchart<-
 function (df, condition1, condition2, xlab = "", ylab = "", ...) 
 {
     x <- df[, condition1]
@@ -860,6 +959,150 @@ df2
 
 
 
+### la tricherie
+var1.test <-
+function(x,ratio = 1,
+         alternative = c("two.sided", "less", "greater"),
+         conf.level = 0.95, ...)
+{
+    if (!((length(ratio) == 1L) && is.finite(ratio) && (ratio > 0)))
+        stop("'ratio' must be a single positive number")
+
+    alternative <- match.arg(alternative)
+
+    if (!((length(conf.level) == 1L) && is.finite(conf.level) &&
+          (conf.level > 0) && (conf.level < 1)))
+        stop("'conf.level' must be a single number between 0 and 1")
+
+   
+ DNAME <- deparse(substitute(x))
+
+    if (inherits(x, "lm")) {
+        DF.x <- x$df.residual
+        V.x <- sum(x$residuals^2) / DF.x
+    } else {
+        x <- x[is.finite(x)]
+        DF.x <- length(x) - 1L
+        if (DF.x < 1L)
+            stop("not enough 'x' observations")
+        V.x <- var(x)
+    }
+    ESTIMATE <- V.x
+    STATISTIC <- DF.x * ESTIMATE / ratio
+    PARAMETER <- c("df" = DF.x)
+    PVAL <- pchisq(STATISTIC, DF.x)
+    if (alternative == "two.sided") {
+        PVAL <- 2 * min(PVAL, 1 - PVAL)
+        BETA <- (1 - conf.level) / 2
+        CINT <- c(DF.x * ESTIMATE / qchisq(1 - BETA, DF.x),
+                  DF.x * ESTIMATE / qchisq(BETA, DF.x))
+    }
+    else if (alternative == "greater") {
+        PVAL <- 1 - PVAL
+        CINT <- c(DF.x * ESTIMATE / qchisq(conf.level, DF.x), Inf)
+    }
+    else
+        CINT <- c(0, DF.x * ESTIMATE / qchisq(1 - conf.level, DF.x))
+    names(STATISTIC) <- "X-squared"
+    names(ESTIMATE) <- names(ratio) <- "variance"
+    attr(CINT, "conf.level") <- conf.level
+    RVAL <- list(statistic = STATISTIC,
+                 parameter = PARAMETER,
+                 p.value = PVAL,
+                 conf.int = CINT,
+                 estimate = ESTIMATE,
+                 null.value = ratio,
+                 alternative = alternative,
+                 method = "One-sample variance test",
+                 data.name = DNAME)
+    attr(RVAL, "class") <- "htest"
+    return(RVAL)
+}
+
+
+
+
+var2.test <-
+function(x, y, ratio = 1,
+         alternative = c("two.sided", "less", "greater"),
+         conf.level = 0.95, ...)
+{
+    if (!((length(ratio) == 1L) && is.finite(ratio) && (ratio > 0)))
+        stop("'ratio' must be a single positive number")
+
+    alternative <- match.arg(alternative)
+
+    if (!((length(conf.level) == 1L) && is.finite(conf.level) &&
+          (conf.level > 0) && (conf.level < 1)))
+        stop("'conf.level' must be a single number between 0 and 1")
+
+    DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+
+    if (inherits(x, "lm") && inherits(y, "lm")) {
+        DF.x <- x$df.residual
+        DF.y <- y$df.residual
+        V.x <- sum(x$residuals^2) / DF.x
+        V.y <- sum(y$residuals^2) / DF.y
+    } else {
+        x <- x[is.finite(x)]
+        DF.x <- length(x) - 1L
+        if (DF.x < 1L)
+            stop("not enough 'x' observations")
+        y <- y[is.finite(y)]
+        DF.y <- length(y) - 1L
+        if (DF.y < 1L)
+            stop("not enough 'y' observations")
+        V.x <- var(x)
+        V.y <- var(y)
+    }
+    ESTIMATE <- V.x / V.y
+    STATISTIC <- ESTIMATE / ratio
+    PARAMETER <- c("num df" = DF.x, "denom df" = DF.y)
+    PVAL <- pf(STATISTIC, DF.x, DF.y)
+    if (alternative == "two.sided") {
+        PVAL <- 2 * min(PVAL, 1 - PVAL)
+        BETA <- (1 - conf.level) / 2
+        CINT <- c(ESTIMATE / qf(1 - BETA, DF.x, DF.y),
+                  ESTIMATE / qf(BETA, DF.x, DF.y))
+    }
+    else if (alternative == "greater") {
+        PVAL <- 1 - PVAL
+        CINT <- c(ESTIMATE / qf(conf.level, DF.x, DF.y), Inf)
+    }
+    else
+        CINT <- c(0, ESTIMATE / qf(1 - conf.level, DF.x, DF.y))
+    names(STATISTIC) <- "F"
+    names(ESTIMATE) <- names(ratio) <- "ratio of variances"
+    attr(CINT, "conf.level") <- conf.level
+    RVAL <- list(statistic = STATISTIC,
+                 parameter = PARAMETER,
+                 p.value = PVAL,
+                 conf.int = CINT,
+                 estimate = ESTIMATE,
+                 null.value = ratio,
+                 alternative = alternative,
+                 method = "F test to compare two variances",
+                 data.name = DNAME)
+    attr(RVAL, "class") <- "htest"
+    return(RVAL)
+}
+
+
+
+
+var.test.default<-
+function (x, y = NULL, ratio=1, alternative = c("two.sided", "less", "greater"),paired=FALSE,conf.level = 0.95,...){
+if(paired){h<- pitman.morgan.test.default(x, y, alternative = alternative, 
+    ratio = ratio, conf.level = conf.level) 
+return(h)}
+
+if(is.null(y)){h<-var1.test(x=x,alternative = alternative, 
+    ratio=ratio, conf.level = conf.level)
+return(h)}
+h<-var2.test(x=x, y=y,alternative = alternative, 
+    ratio=ratio, conf.level = conf.level)
+return(h)
+}
 
 
 

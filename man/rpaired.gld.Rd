@@ -6,7 +6,7 @@ Simulate paired samples
 }
 \description{
 Simulate paired data with a given correlation (Kendall's tau=(2/pi)arcsine(r)) and marginals being
- Generalized Tukey-Lambda distributions.
+ Generalized Tukey-Lambda (G-TL) distributions.
 }
 
 \usage{
@@ -27,7 +27,7 @@ An object of class paired.
 
 
 \references{
-P.M. Grambsch. Simple robust tests for scale differences in paired data. Biometrika, 81, 359-372, 1994.
+Grambsch, P.M. (1994) Simple robust tests for scale differences in paired data. Biometrika, 81, 359-372.
 }
 \author{Stephane CHAMPELY}
 

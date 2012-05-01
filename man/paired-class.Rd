@@ -39,10 +39,11 @@ Class \code{"\linkS4class{vector}"}, by class "data.frame", distance 3.
 Stephane Champely
 }
 \examples{
-data(iceskating)
-p<-with(iceskating,paired(Extension,Flexion))
+data(IceSkating)
+p<-with(IceSkating,paired(Extension,Flexion))
 show(p)
 plot(p)
 summary(p)
+effect.size(p)
 }
 \keyword{classes}
