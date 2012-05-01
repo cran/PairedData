@@ -1103,6 +1103,205 @@ h<-var2.test(x=x, y=y,alternative = alternative,
     ratio=ratio, conf.level = conf.level)
 return(h)
 }
+# scale comparison test
+sandvikolsson.var.test<-function(x,...) UseMethod("sandvikolsson.var.test")
+
+
+sandvikolsson.var.test.default<-
+function (x, y = NULL,
+            alternative = c("two.sided", "less", "greater"),
+            mu = 0, exact = NULL, correct = TRUE,
+            conf.int = FALSE, conf.level = 0.95, location=c("trim","median"),tr=0.1, ...)
+{
+    
+if (!is.null(y)) {
+        dname <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    }
+    else {
+        stop("'y' is missing for paired test")
+    }
+location<-match.arg(location)
+if(location=="trim"){
+X<-abs(x-mean(x,tr=tr))
+Y<-abs(y-mean(y,tr=tr))
+}
+if(location=="median"){
+X<-abs(x-median(x))
+Y<-abs(y-median(y))
+}
+rval<-wilcox.test(X,Y,alternative = alternative,
+            mu = mu, paired = TRUE, exact = exact, correct = correct,
+            conf.int = conf.int , conf.level = conf.level ,...)
+rval$data.name<-dname
+rval$method<-"Sandvik-Olsson paired test for scale comparison"
+    return(rval)
+}
+
+
+sandvikolsson.var.test.paired <-
+function(x,...)
+{
+    if(!is.numeric(x[,1])){return("sandvikolsson.var.test is only suitable to numeric paired data")}
+    DATA <- x
+DNAME <- paste(names(DATA), collapse = " and ")
+    names(DATA) <- c("x", "y")
+    y <- do.call("sandvikolsson.var.test", c(DATA, list(...)))
+y$data.name <- DNAME
+    y
+}
+
+
+### levene
+
+
+levene.var.test<-function(x,...) UseMethod("levene.var.test")
+
+
+levene.var.test.default<-
+function (x, y = NULL,
+       alternative = c("two.sided", "less", "greater"),
+       mu = 0,conf.level = 0.95, location=c("trim","median"),tr=0.1,...)
+{
+    
+if (!is.null(y)) {
+        dname <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    }
+    else {
+        stop("'y' is missing for paired test")
+    }
+location<-match.arg(location)
+if(location=="trim"){
+X<-abs(x-mean(x,tr=tr))
+Y<-abs(y-mean(y,tr=tr))
+}
+if(location=="median"){
+X<-abs(x-median(x))
+Y<-abs(y-median(y))
+}
+
+rval<-t.test(X,Y,alternative = alternative,
+            mu = mu, paired = TRUE,conf.level = conf.level ,...)
+rval$data.name<-dname
+rval$method<-"Levene paired test for scale comparison"
+    return(rval)
+}
+
+
+levene.var.test.paired <-
+function(x,...)
+{
+    if(!is.numeric(x[,1])){return("levene.var.test is only suitable to numeric paired data")}
+    DATA <- x
+DNAME <- paste(names(DATA), collapse = " and ")
+    names(DATA) <- c("x", "y")
+    y <- do.call("levene.var.test", c(DATA, list(...)))
+y$data.name <- DNAME
+    y
+}
+
+
+
+### imam
+
+
+imam.var.test<-function(x,...) UseMethod("imam.var.test")
+
+
+imam.var.test.default<-
+function (x, y = NULL,
+       alternative = c("two.sided", "less", "greater"),
+       mu = 0,conf.level = 0.95, location=c("trim","median"),tr=0.1, ...)
+{
+    
+if (!is.null(y)) {
+        dname <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    }
+    else {
+        stop("'y' is missing for paired test")
+    }
+location<-match.arg(location)
+if(location=="trim"){
+X1<-abs(x-mean(x,tr=tr))
+Y1<-abs(y-mean(y,tr=tr))
+}
+if(location=="median"){
+X1<-abs(x-median(x))
+Y1<-abs(y-median(y))
+}
+n<-length(x)
+X1Y1<-rank(c(X1,Y1))
+X2<-X1Y1[1:n]
+Y2<-X1Y1[(n+1):(2*n)]
+rval<-t.test(X2,Y2,alternative = alternative,
+            mu = mu, paired = TRUE,conf.level = conf.level ,...)
+rval$data.name<-dname
+rval$method<-"Imam paired test for scale comparison"
+    return(rval)
+}
+
+
+imam.var.test.paired <-
+function(x,...)
+{
+    if(!is.numeric(x[,1])){return("imam.var.test is only suitable to numeric paired data")}
+    DATA <- x
+DNAME <- paste(names(DATA), collapse = " and ")
+    names(DATA) <- c("x", "y")
+    y <- do.call("imam.var.test", c(DATA, list(...)))
+y$data.name <- DNAME
+    y
+}
+
+
+
+
+
+
+### mcculloch
+
+
+mcculloch.var.test<-function(x,...) UseMethod("mcculloch.var.test")
+
+
+mcculloch.var.test.default<-
+function (x, y = NULL,
+       alternative = c("two.sided", "less", "greater"),method= c("spearman","pearson", "kendall"),
+       exact = NULL,conf.level = 0.95,continuity = FALSE, ...)
+{
+    
+if (!is.null(y)) {
+        dname <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
+    }
+    else {
+        stop("'y' is missing for paired test")
+    }
+D<-x-y
+S<-x+y
+method<-match.arg(method)
+alternative<-match.arg(alternative)
+rval<-cor.test(D,S,alternative = alternative,
+            method = method,
+exact = exact, conf.level = conf.level , continuity = continuity,...)
+rval$data.name<-dname
+rval$method<-"McCulloch paired test for scale comparison"
+    return(rval)
+}
+
+
+mcculloch.var.test.paired <-
+function(x,...)
+{
+    if(!is.numeric(x[,1])){return("mcculloch.var.test is only suitable to numeric paired data")}
+    DATA <- x
+DNAME <- paste(names(DATA), collapse = " and ")
+    names(DATA) <- c("x", "y")
+    y <- do.call("mcculloch.var.test", c(DATA, list(...)))
+y$data.name <- DNAME
+    y
+}
+
+
+
 
 
 

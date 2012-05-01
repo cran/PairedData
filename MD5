@@ -1,7 +1,7 @@
-eb67b1877b992e8928e4ce014cabc0e1 *DESCRIPTION
+cd8e709a11254c1d8856d5364294690b *DESCRIPTION
 5eb7e2b2d9346bbc8d7d033b43f21e65 *NAMESPACE
 d9ec092ce93d32eab7f93cdb9a3e37b6 *R/ClassP1.R
-4a0de8d26604b11469c1bb4e0aa410ab *R/global1.R
+085f3d765a096ab7ffc4d0eea9037ad1 *R/global1.R
 bb2ba2d5717f0d5f8a2cd4ee8b09154c *data/Anorexia.rda
 40f0db826d8c87dc7954afd8adafcc5f *data/Barley.rda
 eb721433e51854f9440d598edd51451c *data/Blink.rda
@@ -56,7 +56,10 @@ a823a99f198e912115ecd65eca9156a6 *man/Sewage.Rd
 88b324aac7f29470069ba16b9df795b6 *man/bonettseier.var.test.Rd
 c9e72e4098728b16c64c8fdd6e3df570 *man/effect.size.Rd
 29a78625a6b792c23dff5de70db7c4f3 *man/grambsch.var.test.Rd
+d6f96dbb18ea2831bb240c57080abb5c *man/imam.var.test.Rd
 9ea8fa7a44884a98deb68c0b090fb5d4 *man/lambda.table.Rd
+61024b73e71e5c2c6fd315dce76e0c22 *man/levene.var.test.Rd
+94425005fe5ac48e51c615c5751c4fc7 *man/mcculloch.var.test.Rd
 b025f1b6d09ce9b2427eb2c944be7941 *man/paired-class.Rd
 fc8dedb4b387cebc68031b625f837fc1 *man/paired.Rd
 802e6f32f47abaef4e6801034f6cc6e4 *man/paired.plotBA.Rd
@@ -66,6 +69,7 @@ cd8ec5f091e9f7084f185eb1dfa5df15 *man/paired.plotCor.Rd
 55f072805ca7720802fdaad64fde126f *man/plot.Rd
 ac24465e1ff0f1890ed4e3b9c03f385e *man/rpaired.contaminated.Rd
 8b099afb525166593f5ec3786edd6cdf *man/rpaired.gld.Rd
+0c31fadfbefe49bd237face91d630cdd *man/sandvikolsson.var.test.Rd
 fbdde1fa57dfe90917294c5ed11c9a6f *man/slidingchart.Rd
 cd603276b83ff16024b959f9ffa9e2fc *man/summary.Rd
 6a83f6a9a4d034b2f7547b1e7bcaf39e *man/t.test.Rd

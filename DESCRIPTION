@@ -1,7 +1,7 @@
 Package: PairedData
 Type: Package
 Title: Paired Data Analysis
-Version: 0.9.9
+Version: 1.0.0
 Date: 2012-05-01
 Author: Stephane Champely <champely@univ-lyon1.fr>
 Maintainer: Stephane Champely <champely@univ-lyon1.fr>
@@ -11,6 +11,6 @@ Description: This package provides many datasets and a set of graphics
 License: GPL (>= 2)
 Depends: methods,graphics,MASS,gld,mvtnorm,lattice,ggplot2
 Collate: global1.R ClassP1.R
-Packaged: 2012-06-13 10:50:33 UTC; champely
+Packaged: 2012-06-24 15:31:56 UTC; champely
 Repository: CRAN
-Date/Publication: 2012-06-13 12:14:26
+Date/Publication: 2012-06-25 09:15:50
