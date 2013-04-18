@@ -793,7 +793,7 @@ function (df, condition1, condition2, groups = NULL, facet = TRUE,
     df2 <- df
     df2$M <- (df[, condition1] + df[, condition2])/2
     df2$D <- (df[, condition2] - df[, condition1])
-    plotP <- ggplot(data = df2) + aes(x = M, y = D)
+    plotP <- ggplot(data = df2) + aes_string(x = "M", y = "D")
     if (is.null(groups)) {
         plotP + geom_point() + geom_abline(intercept = 0, slope = 0) + 
             geom_smooth(method = "lm", formula = "y~1") + xlab(name.mean) + 
@@ -834,22 +834,21 @@ df2[, "Conditions"]<-ordered(df2[, "Conditions"],levels=c(condition1,condition2)
     plotP <- ggplot(data = df2) + aes_string(x = "Measurements", 
         y = "Subjects", group = "Subjects")
     if (is.null(groups)) {
-        plotP + geom_point() + aes_string(colour = "Conditions")+xlab("")+ opts(legend.key = theme_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
+        plotP + geom_point() + aes_string(colour = "Conditions")+xlab("")+  theme(legend.key = element_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
     }
     else {
         if (facet) {
             formula <- "Groups~."
             plotP + geom_point() + aes_string(colour = "Conditions") + 
-                facet_grid(formula, scales = "free_y")+xlab("")+ opts(legend.key = theme_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
+                facet_grid(formula, scales = "free_y")+xlab("")+ theme(legend.key = element_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
         }
         else {
             plotP + geom_point() + aes_string(colour = "Conditions") + 
-                aes_string(shape = "Groups")+xlab("")+ opts(legend.key = theme_rect())+ scale_colour_discrete(name = "")+ylab(subjects)+ scale_shape_discrete(name=groups)
+                aes_string(shape = "Groups")+xlab("")+ theme(legend.key = element_rect())+ scale_colour_discrete(name = "")+ylab(subjects)+ scale_shape_discrete(name=groups)
 
         }
     }
 }
-
 
 paired.plotProfiles<-
 function (df, condition1, condition2, groups = NULL,subjects, 

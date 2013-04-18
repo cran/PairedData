@@ -1,7 +1,7 @@
-cd8e709a11254c1d8856d5364294690b *DESCRIPTION
+620f3dd492942ee3220cb25eb1375e12 *DESCRIPTION
 5eb7e2b2d9346bbc8d7d033b43f21e65 *NAMESPACE
 d9ec092ce93d32eab7f93cdb9a3e37b6 *R/ClassP1.R
-085f3d765a096ab7ffc4d0eea9037ad1 *R/global1.R
+e406a0136fc0b08f0b239473378a3032 *R/global1.R
 bb2ba2d5717f0d5f8a2cd4ee8b09154c *data/Anorexia.rda
 40f0db826d8c87dc7954afd8adafcc5f *data/Barley.rda
 eb721433e51854f9440d598edd51451c *data/Blink.rda
@@ -44,7 +44,7 @@ cfb327ba3ee1b25d89ddca87865af4b3 *man/HorseBeginners.Rd
 fe7d5b60cd6c98e721f28fd6461f03f6 *man/Iron.Rd
 cba1146ca3956d7dcb8b73519756cb45 *man/Meat.Rd
 1495182aaae13fa5a44ef227163bd246 *man/PairedData-internal.Rd
-b90d6d2a044f6efb0e45596c5d015823 *man/PairedData-package.Rd
+445d8d10aec35635fcb60391a2fdd8de *man/PairedData-package.Rd
 741798ac3453e8bcb8d5016a4fe32745 *man/PrisonStress.Rd
 c5cf88717028c0517ea851c2d0be94c5 *man/Rugby.Rd
 a823a99f198e912115ecd65eca9156a6 *man/Sewage.Rd
