@@ -1,8 +1,8 @@
-\name{var.test}
-\alias{var.test}
-\alias{var.test.default}
+\name{Var.test}
+\alias{Var.test}
+\alias{Var.test.default}
 \alias{pitman.morgan.test.default}
-\alias{var.test.paired}
+\alias{Var.test.paired}
 
 \title{
 Tests of variance(s) for normal distribution(s)}
@@ -10,10 +10,10 @@ Tests of variance(s) for normal distribution(s)}
 \description{
 Classical tests of variance for one-sample, two-independent samples or paired samples.}
 \usage{
-\method{var.test}{default}(x, y = NULL, ratio = 1, alternative = c("two.sided", 
+\method{Var.test}{default}(x, y = NULL, ratio = 1, alternative = c("two.sided", 
     "less", "greater"), paired = FALSE, conf.level = 0.95, ...)
 
-\method{var.test}{paired}(x, ...)
+\method{Var.test}{paired}(x, ...)
 
 \method{pitman.morgan.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"), 
     ratio = 1, conf.level = 0.95,...)
@@ -61,21 +61,21 @@ A list with class "htest" containing the following components:
 \author{Stephane CHAMPELY}
 
 
-\seealso{bonettseier.var.test, grambsch.var.test}
+\seealso{bonettseier.Var.test, grambsch.Var.test}
 
 \examples{
 data(HorseBeginners)
 
 #one sample test
-var.test(HorseBeginners$Actual,ratio=15)
+Var.test(HorseBeginners$Actual,ratio=15)
 
 # two independent samples test
-var.test(HorseBeginners$Actual,HorseBeginners$Imaginary)
+Var.test(HorseBeginners$Actual,HorseBeginners$Imaginary)
 
 # two dependent samples test
-var.test(HorseBeginners$Actual,HorseBeginners$Imaginary,paired=TRUE)
+Var.test(HorseBeginners$Actual,HorseBeginners$Imaginary,paired=TRUE)
 p<-with(HorseBeginners,paired(Actual,Imaginary))
-var.test(p)
+Var.test(p)
 }
 \keyword{htest}
 

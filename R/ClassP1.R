@@ -145,7 +145,6 @@ return(paired.slidingchart(df, condition1, condition2,...))
 rpaired.contaminated<-
 function (n, d1 = c(0.1, 10, 1), d2 = c(0.1, 10, 1), r = 0.5) 
 {
-    require(mvtnorm)
     eps1 <- d1[1]
     k1 <- d1[2]
     Sigma1 <- d1[3]
@@ -168,8 +167,7 @@ function (n, d1 = c(0.1, 10, 1), d2 = c(0.1, 10, 1), r = 0.5)
 rpaired.gld<-
 function (n, d1=c(0.000,0.1974,0.1349,0.1349), d2=c(0.000,0.1974,0.1349,0.1349), r) 
 {
-    require(mvtnorm)
-    require(gld)
+        
     X <- rmvnorm(n, mean = c(0, 0), sigma = matrix(c(1, r, r, 
         1), ncol = 2))
     u1 <- pnorm(X[, 1])

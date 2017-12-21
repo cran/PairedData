@@ -1,7 +1,7 @@
-\name{mcculloch.var.test}
-\alias{mcculloch.var.test}
-\alias{mcculloch.var.test.default}
-\alias{mcculloch.var.test.paired}
+\name{mcculloch.Var.test}
+\alias{mcculloch.Var.test}
+\alias{mcculloch.Var.test.default}
+\alias{mcculloch.Var.test.paired}
 
 \title{
 McCulloch test of scale for paired samples
@@ -10,14 +10,19 @@ McCulloch test of scale for paired samples
 Robust test of scale for paired samples based on spearman coefficient (the default, or kendall or pearson) of the transformed D=x-y and S=x+y.
 }
 \usage{
-mcculloch.var.test(x, ...)
+mcculloch.Var.test(x, ...)
 
-\method{mcculloch.var.test}{default}(x, y = NULL,
-       alternative = c("two.sided", "less", "greater"),method= c("spearman","pearson", "kendall"),
-       exact = NULL,conf.level = 0.95,continuity = FALSE, ...)
+\method{mcculloch.Var.test}{default}(x, y = NULL,
 
-\method{mcculloch.var.test}{paired}(x, ...)
+alternative = c("two.sided", "less", "greater"),
+
+method= c("spearman","pearson", "kendall"),
+
+exact = NULL,conf.level = 0.95,continuity = FALSE, ...)
+
+\method{mcculloch.Var.test}{paired}(x, ...)
 }
+
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
@@ -57,23 +62,23 @@ McCulloch, C.E. (1987) Tests for equality of variances for paired data. Communic
 \author{Stephane CHAMPELY}
 
 
-\seealso{var.test, grambsch.var.test}
+\seealso{Var.test, grambsch.Var.test}
 
 \examples{
 z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
-mcculloch.var.test(x,y)
+mcculloch.Var.test(x,y)
 
 p<-paired(x,y)
-mcculloch.var.test(p)
+mcculloch.Var.test(p)
 
 # A variation with kendall tau
-mcculloch.var.test(p,method="kendall")
+mcculloch.Var.test(p,method="kendall")
 
 # equivalence with the PitmanMorgan test
-mcculloch.var.test(p,method="pearson")
-var.test(p)
+mcculloch.Var.test(p,method="pearson")
+Var.test(p)
 
 
 }

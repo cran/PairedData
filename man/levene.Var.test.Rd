@@ -1,7 +1,7 @@
-\name{levene.var.test}
-\alias{levene.var.test}
-\alias{levene.var.test.default}
-\alias{levene.var.test.paired}
+\name{levene.Var.test}
+\alias{levene.Var.test}
+\alias{levene.Var.test.default}
+\alias{levene.Var.test.paired}
 
 \title{
 Levene test of scale for paired samples
@@ -10,15 +10,15 @@ Levene test of scale for paired samples
 Robust test of scale for paired samples based on absolute deviations from the trimmed means (or medians), called extended Brown-Forsythe test in Wilcox (1989).
 }
 \usage{
-levene.var.test(x, ...)
+levene.Var.test(x, ...)
 
-\method{levene.var.test}{default}(x, y = NULL,
+\method{levene.Var.test}{default}(x, y = NULL,
        alternative = c("two.sided", "less", "greater"),
        mu = 0,conf.level = 0.95,location=c("trim","median"),
 tr=0.1, ...)
 
 
-\method{levene.var.test}{paired}(x, ...)
+\method{levene.Var.test}{paired}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -63,22 +63,22 @@ Wilcox, R.R. (1989) Comparing the variances of dependent groups. Psychometrika, 
 \author{Stephane CHAMPELY}
 
 
-\seealso{var.test, grambsch.var.test}
+\seealso{Var.test, grambsch.Var.test}
 
 \examples{
 z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
-levene.var.test(x,y)
+levene.Var.test(x,y)
 
 # Some variations
-levene.var.test(x,y,tr=0.2)
-levene.var.test(x,y,location="median")
+levene.Var.test(x,y,tr=0.2)
+levene.Var.test(x,y,location="median")
 
 
 data(anscombe2)
 p<-with(anscombe2,paired(X2,Y2))
-levene.var.test(p)
+levene.Var.test(p)
 
 
 

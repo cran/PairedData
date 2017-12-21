@@ -1,7 +1,7 @@
-\name{sandvikolsson.var.test}
-\alias{sandvikolsson.var.test}
-\alias{sandvikolsson.var.test.default}
-\alias{sandvikolsson.var.test.paired}
+\name{sandvikolsson.Var.test}
+\alias{sandvikolsson.Var.test}
+\alias{sandvikolsson.Var.test.default}
+\alias{sandvikolsson.Var.test.paired}
 
 \title{
 Sandvik-Olsson test of scale for paired samples
@@ -10,14 +10,14 @@ Sandvik-Olsson test of scale for paired samples
 Robust test of scale for paired samples based on the absolute deviations from the trimmed means (or medians).
 }
 \usage{
-sandvikolsson.var.test(x, ...)
+sandvikolsson.Var.test(x, ...)
 
-\method{sandvikolsson.var.test}{default}(x, y = NULL,
+\method{sandvikolsson.Var.test}{default}(x, y = NULL,
             alternative = c("two.sided", "less", "greater"),
             mu = 0, exact = NULL, correct = TRUE,
             conf.int = FALSE, conf.level = 0.95,location=c("trim","median"),tr=0.1, ...)
 
-\method{sandvikolsson.var.test}{paired}(x, ...)
+\method{sandvikolsson.Var.test}{paired}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -73,21 +73,21 @@ Sandvik, L. and Olsson, B. (1982) A nearly distribution-free test for comparing 
 \author{Stephane CHAMPELY}
 
 
-\seealso{var.test, grambsch.var.test}
+\seealso{Var.test, grambsch.Var.test}
 
 \examples{
 z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
-sandvikolsson.var.test(x,y)
+sandvikolsson.Var.test(x,y)
 
 p<-paired(x,y)
-sandvikolsson.var.test(p)
+sandvikolsson.Var.test(p)
 
 
 # some variations
-sandvikolsson.var.test(p,tr=0.2)
-sandvikolsson.var.test(p,location="median")
+sandvikolsson.Var.test(p,tr=0.2)
+sandvikolsson.Var.test(p,location="median")
 
 }
 \keyword{htest}

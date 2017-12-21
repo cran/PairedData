@@ -1,7 +1,7 @@
-\name{imam.var.test}
-\alias{imam.var.test}
-\alias{imam.var.test.default}
-\alias{imam.var.test.paired}
+\name{imam.Var.test}
+\alias{imam.Var.test}
+\alias{imam.Var.test.default}
+\alias{imam.Var.test.paired}
 
 \title{
 Imam test of scale for paired samples
@@ -10,15 +10,15 @@ Imam test of scale for paired samples
 Robust test of scale for paired samples based on absolute deviations from the trimmed means (or medians), called Imam test in Wilcox (1989).
 }
 \usage{
-imam.var.test(x, ...)
+imam.Var.test(x, ...)
 
-\method{imam.var.test}{default}(x, y = NULL,
+\method{imam.Var.test}{default}(x, y = NULL,
        alternative = c("two.sided", "less", "greater"),
        mu = 0,conf.level = 0.95,location=c("trim","median"),
 tr=0.1,  ...)
 
 
-\method{imam.var.test}{paired}(x, ...)
+\method{imam.Var.test}{paired}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -65,21 +65,21 @@ The data are transformed as deviations from the trimmed mean: X=abs(x-mean(x,tr=
 \author{Stephane CHAMPELY}
 
 
-\seealso{var.test, grambsch.var.test}
+\seealso{Var.test, grambsch.Var.test}
 
 \examples{
 z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
-imam.var.test(x,y)
+imam.Var.test(x,y)
 
 # some variations
-imam.var.test(x,y,tr=0.2)
-imam.var.test(x,y,location="median")
+imam.Var.test(x,y,tr=0.2)
+imam.Var.test(x,y,location="median")
 
 data(anscombe2)
 p<-with(anscombe2,paired(X1,Y1))
-imam.var.test(p)
+imam.Var.test(p)
 }
 \keyword{htest}
 

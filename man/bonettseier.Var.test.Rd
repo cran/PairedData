@@ -1,7 +1,7 @@
-\name{bonettseier.var.test}
-\alias{bonettseier.var.test}
-\alias{bonettseier.var.test.default}
-\alias{bonettseier.var.test.paired}
+\name{bonettseier.Var.test}
+\alias{bonettseier.Var.test}
+\alias{bonettseier.Var.test.default}
+\alias{bonettseier.Var.test.paired}
 
 \title{
 Bonett-Seier test of scale for paired samples
@@ -10,12 +10,12 @@ Bonett-Seier test of scale for paired samples
 Robust test of scale for paired samples based on the mean absolute deviations.
 }
 \usage{
-bonettseier.var.test(x, ...)
+bonettseier.Var.test(x, ...)
 
-\method{bonettseier.var.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"), 
+\method{bonettseier.Var.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"), 
 omega = 1, conf.level = 0.95,...)
 
-\method{bonettseier.var.test}{paired}(x, ...)
+\method{bonettseier.Var.test}{paired}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -57,17 +57,17 @@ and Behavioral Statistics, 28, 21-30.
 \author{Stephane CHAMPELY}
 
 
-\seealso{var.test, grambsch.var.test}
+\seealso{Var.test, grambsch.Var.test}
 
 \examples{
 z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
-bonettseier.var.test(x,y)
+bonettseier.Var.test(x,y)
 
 data(anscombe2)
 p<-with(anscombe2,paired(X1,Y1))
-bonettseier.var.test(p)
+bonettseier.Var.test(p)
 }
 \keyword{htest}
 

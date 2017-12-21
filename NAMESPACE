@@ -8,3 +8,30 @@ exportClasses(
 )
 
 import(graphics,methods,MASS,gld,mvtnorm,lattice,ggplot2)
+importFrom("stats", "D", "IQR", "complete.cases", "cor", "cor.test",
+             "dnorm", "integrate", "mad", "median", "pchisq", "pf",
+             "pnorm", "pt", "qchisq", "qf", "qnorm", "qt", "rbinom",
+             "reorder", "sd", "t.test", "terms", "var", "wilcox.test")
+
+S3method(Var.test,paired)
+S3method(Var.test,default)
+
+S3method(bonettseier.Var.test,default)
+S3method(bonettseier.Var.test,paired)
+S3method(grambsch.Var.test,default) 
+S3method(grambsch.Var.test,paired)
+S3method(imam.Var.test,default) 
+S3method(imam.Var.test,paired) 
+S3method(levene.Var.test,default)
+S3method(levene.Var.test,paired) 
+S3method(mcculloch.Var.test,default)
+S3method(mcculloch.Var.test,paired) 
+S3method(sandvikolsson.Var.test,default)
+S3method(sandvikolsson.Var.test,paired) 
+S3method(t.test,paired) 
+S3method(wilcox.test,paired) 
+S3method(winsor.cor.test,default) 
+S3method(winsor.cor.test,paired)
+S3method(yuen.t.test,default) 
+S3method(yuen.t.test,formula) 
+S3method(yuen.t.test,paired)

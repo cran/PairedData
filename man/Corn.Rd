@@ -47,9 +47,9 @@ with(Corn,t.test(Crossed,Self,var.equal=TRUE))
 with(Corn,t.test(Crossed,Self,paired=TRUE))
 
 # The Pitman-Morgan test is influenced by the two outliers
-with(Corn,var.test(paired(Crossed,Self)))
-with(Corn,grambsch.var.test(paired(Crossed,Self)))
-with(Corn,bonettseier.var.test(paired(Crossed,Self)))
+with(Corn,Var.test(paired(Crossed,Self)))
+with(Corn,grambsch.Var.test(paired(Crossed,Self)))
+with(Corn,bonettseier.Var.test(paired(Crossed,Self)))
 
 # Lastly, is there a pot effect?
 with(Corn,plot(paired(Crossed,Self)))

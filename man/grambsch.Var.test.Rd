@@ -1,7 +1,7 @@
-\name{grambsch.var.test}
-\alias{grambsch.var.test}
-\alias{grambsch.var.test.default}
-\alias{grambsch.var.test.paired}
+\name{grambsch.Var.test}
+\alias{grambsch.Var.test}
+\alias{grambsch.Var.test.default}
+\alias{grambsch.Var.test.paired}
 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Grambsch test of scale for paired samples
@@ -10,11 +10,11 @@
 Robust test of scale for paired samples.}
 
 \usage{
-grambsch.var.test(x, ...)
+grambsch.Var.test(x, ...)
 
-\method{grambsch.var.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),...)
+\method{grambsch.Var.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),...)
 
-\method{grambsch.var.test}{paired}(x, ...)
+\method{grambsch.Var.test}{paired}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -51,16 +51,16 @@ Grambsch,P.M. (1994) Simple robust tests for scale differences in paired data. B
 \author{Stephane CHAMPELY}
 
 
-\seealso{var.test, bonettseier.var.test}
+\seealso{Var.test, bonettseier.Var.test}
 
 \examples{
 z<-rnorm(20)
 x<-rnorm(20)+z
 y<-(rnorm(20)+z)*2
-grambsch.var.test(x,y)
+grambsch.Var.test(x,y)
 
 p<-paired(x,y)
-grambsch.var.test(p)
+grambsch.Var.test(p)
 }
 \keyword{htest}
 

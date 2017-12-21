@@ -9,7 +9,9 @@
 Plot an object of class paired.
 }
 \usage{
-\S4method{plot}{paired}(x, groups=NULL,subjects=NULL, facet=TRUE,type=c("correlation","BA","McNeil","profile"),...)
+\S4method{plot}{paired}(x, groups=NULL,subjects=NULL,
+
+ facet=TRUE,type=c("correlation","BA","McNeil","profile"),...)
 }
 
 \arguments{

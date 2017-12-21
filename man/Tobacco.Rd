@@ -42,8 +42,8 @@ with(Tobacco,plot(paired(Preparation_1,Preparation_2)))
 with(Tobacco,t.test(paired(Preparation_1,Preparation_2)))
 with(Tobacco,yuen.t.test(paired(Preparation_1,Preparation_2)))
 
-with(Tobacco,var.test(paired(Preparation_1,Preparation_2)))
-with(Tobacco,grambsch.var.test(paired(Preparation_1,Preparation_2)))
+with(Tobacco,Var.test(paired(Preparation_1,Preparation_2)))
+with(Tobacco,grambsch.Var.test(paired(Preparation_1,Preparation_2)))
 
 with(Tobacco,cor.test(Preparation_1,Preparation_2))
 with(Tobacco,winsor.cor.test(Preparation_1,Preparation_2))

@@ -35,10 +35,10 @@ with(HorseBeginners,plot(paired(Actual,Imaginary),type="profile"))
 
 # This outlier has a great influence
 # on the non robust Pitman-Morgan test of variances
-with(HorseBeginners,var.test(paired(Actual,Imaginary)))
-with(HorseBeginners[-1,],var.test(paired(Actual,Imaginary)))
-with(HorseBeginners,grambsch.var.test(paired(Actual,Imaginary)))
-with(HorseBeginners,bonettseier.var.test(paired(Actual,Imaginary)))
+with(HorseBeginners,Var.test(paired(Actual,Imaginary)))
+with(HorseBeginners[-1,],Var.test(paired(Actual,Imaginary)))
+with(HorseBeginners,grambsch.Var.test(paired(Actual,Imaginary)))
+with(HorseBeginners,bonettseier.Var.test(paired(Actual,Imaginary)))
 }
 
 

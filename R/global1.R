@@ -499,17 +499,6 @@ pitman.morgan.test.default<-function (x, y = NULL, alternative = c("two.sided", 
 
 
 
-var.test.paired <-
-function(x,...)
-{
-    if(!is.numeric(x[,1])){return("var.test is only suitable to numeric paired data")}
-    DATA <- x
-DNAME <- paste(names(DATA), collapse = " and ")
-    names(DATA) <- c("x", "y")
-    y <- do.call("pitman.morgan.test.default", c(DATA,list(...)))
-y$data.name <- DNAME
-    y
-}
 
 # pitman.morgan.test.paired <-
 # function(x,...)
@@ -634,10 +623,10 @@ y$data.name <- DNAME
 
 
 
-bonettseier.var.test<-function(x,...) UseMethod("bonettseier.var.test")
+bonettseier.Var.test<-function(x,...) UseMethod("bonettseier.Var.test")
 
 
-bonettseier.var.test.default<-
+bonettseier.Var.test.default<-
 function (x, y = NULL, alternative = c("two.sided", "less", "greater"), 
     omega = 1, conf.level = 0.95,...) 
 {
@@ -712,14 +701,14 @@ function (x, y = NULL, alternative = c("two.sided", "less", "greater"),
 
 
 
-bonettseier.var.test.paired <-
+bonettseier.Var.test.paired <-
 function(x,...)
 {
     if(!is.numeric(x[,1])){return("bonett.seier.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("bonettseier.var.test", c(DATA, list(...)))
+    y <- do.call("bonettseier.Var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }
@@ -728,10 +717,10 @@ y$data.name <- DNAME
 
 ### Encore un autre
 
-grambsch.var.test<-function(x,...) UseMethod("grambsch.var.test")
+grambsch.Var.test<-function(x,...) UseMethod("grambsch.Var.test")
 
 
-grambsch.var.test.default<-
+grambsch.Var.test.default<-
 function (x, y = NULL, alternative = c("two.sided", "less", "greater"),...) 
 {
     alternative <- match.arg(alternative)
@@ -769,14 +758,14 @@ function (x, y = NULL, alternative = c("two.sided", "less", "greater"),...)
     return(rval)
 }
 
-grambsch.var.test.paired <-
+grambsch.Var.test.paired <-
 function(x,...)
 {
     if(!is.numeric(x[,1])){return("grambsch.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("grambsch.var.test", c(DATA, list(...)))
+    y <- do.call("grambsch.Var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }
@@ -834,21 +823,24 @@ df2[, "Conditions"]<-ordered(df2[, "Conditions"],levels=c(condition1,condition2)
     plotP <- ggplot(data = df2) + aes_string(x = "Measurements", 
         y = "Subjects", group = "Subjects")
     if (is.null(groups)) {
-        plotP + geom_point() + aes_string(colour = "Conditions")+xlab("")+  theme(legend.key = element_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
+        plotP + geom_point() + aes_string(colour = "Conditions")+xlab("")+ theme(legend.key = element_rect()) + scale_colour_discrete(name = "")+ylab(subjects)
     }
     else {
         if (facet) {
             formula <- "Groups~."
             plotP + geom_point() + aes_string(colour = "Conditions") + 
-                facet_grid(formula, scales = "free_y")+xlab("")+ theme(legend.key = element_rect())+ scale_colour_discrete(name = "")+ylab(subjects)
+                facet_grid(formula, scales = "free_y")+xlab("")+ theme(legend.key = element_rect()) + scale_colour_discrete(name = "")+ylab(subjects)
         }
         else {
             plotP + geom_point() + aes_string(colour = "Conditions") + 
-                aes_string(shape = "Groups")+xlab("")+ theme(legend.key = element_rect())+ scale_colour_discrete(name = "")+ylab(subjects)+ scale_shape_discrete(name=groups)
+                aes_string(shape = "Groups")+xlab("")+ 
+theme(legend.key = element_rect()) + 
+scale_colour_discrete(name = "")+ylab(subjects)+ scale_shape_discrete(name=groups)
 
         }
     }
 }
+
 
 paired.plotProfiles<-
 function (df, condition1, condition2, groups = NULL,subjects, 
@@ -890,7 +882,6 @@ function (df, condition1, condition2, xlab = "", ylab = "", ...)
 {
     x <- df[, condition1]
     y <- df[, condition2]
-    require(MASS)
     par(mar = c(2, 2, 5, 4))
     mX <- min(x)
     MX <- max(x)
@@ -1086,10 +1077,22 @@ function(x, y, ratio = 1,
     return(RVAL)
 }
 
+Var.test.paired <-
+function(x,...)
+{
+    if(!is.numeric(x[,1])){return("Var.test is only suitable to numeric paired data")}
+    DATA <- x
+DNAME <- paste(names(DATA), collapse = " and ")
+    names(DATA) <- c("x", "y")
+    y <- do.call("pitman.morgan.test.default", c(DATA,list(...)))
+y$data.name <- DNAME
+    y
+}
+
+Var.test<-function(x,...) UseMethod("Var.test")
 
 
-
-var.test.default<-
+Var.test.default<-
 function (x, y = NULL, ratio=1, alternative = c("two.sided", "less", "greater"),paired=FALSE,conf.level = 0.95,...){
 if(paired){h<- pitman.morgan.test.default(x, y, alternative = alternative, 
     ratio = ratio, conf.level = conf.level) 
@@ -1103,10 +1106,10 @@ h<-var2.test(x=x, y=y,alternative = alternative,
 return(h)
 }
 # scale comparison test
-sandvikolsson.var.test<-function(x,...) UseMethod("sandvikolsson.var.test")
+sandvikolsson.Var.test<-function(x,...) UseMethod("sandvikolsson.Var.test")
 
 
-sandvikolsson.var.test.default<-
+sandvikolsson.Var.test.default<-
 function (x, y = NULL,
             alternative = c("two.sided", "less", "greater"),
             mu = 0, exact = NULL, correct = TRUE,
@@ -1137,14 +1140,14 @@ rval$method<-"Sandvik-Olsson paired test for scale comparison"
 }
 
 
-sandvikolsson.var.test.paired <-
+sandvikolsson.Var.test.paired <-
 function(x,...)
 {
-    if(!is.numeric(x[,1])){return("sandvikolsson.var.test is only suitable to numeric paired data")}
+    if(!is.numeric(x[,1])){return("sandvikolsson.Var.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("sandvikolsson.var.test", c(DATA, list(...)))
+    y <- do.call("sandvikolsson.Var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }
@@ -1153,10 +1156,10 @@ y$data.name <- DNAME
 ### levene
 
 
-levene.var.test<-function(x,...) UseMethod("levene.var.test")
+levene.Var.test<-function(x,...) UseMethod("levene.Var.test")
 
 
-levene.var.test.default<-
+levene.Var.test.default<-
 function (x, y = NULL,
        alternative = c("two.sided", "less", "greater"),
        mu = 0,conf.level = 0.95, location=c("trim","median"),tr=0.1,...)
@@ -1186,14 +1189,14 @@ rval$method<-"Levene paired test for scale comparison"
 }
 
 
-levene.var.test.paired <-
+levene.Var.test.paired <-
 function(x,...)
 {
-    if(!is.numeric(x[,1])){return("levene.var.test is only suitable to numeric paired data")}
+    if(!is.numeric(x[,1])){return("levene.Var.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("levene.var.test", c(DATA, list(...)))
+    y <- do.call("levene.Var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }
@@ -1203,10 +1206,10 @@ y$data.name <- DNAME
 ### imam
 
 
-imam.var.test<-function(x,...) UseMethod("imam.var.test")
+imam.Var.test<-function(x,...) UseMethod("imam.Var.test")
 
 
-imam.var.test.default<-
+imam.Var.test.default<-
 function (x, y = NULL,
        alternative = c("two.sided", "less", "greater"),
        mu = 0,conf.level = 0.95, location=c("trim","median"),tr=0.1, ...)
@@ -1239,14 +1242,14 @@ rval$method<-"Imam paired test for scale comparison"
 }
 
 
-imam.var.test.paired <-
+imam.Var.test.paired <-
 function(x,...)
 {
-    if(!is.numeric(x[,1])){return("imam.var.test is only suitable to numeric paired data")}
+    if(!is.numeric(x[,1])){return("imam.Var.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("imam.var.test", c(DATA, list(...)))
+    y <- do.call("imam.Var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }
@@ -1259,10 +1262,10 @@ y$data.name <- DNAME
 ### mcculloch
 
 
-mcculloch.var.test<-function(x,...) UseMethod("mcculloch.var.test")
+mcculloch.Var.test<-function(x,...) UseMethod("mcculloch.Var.test")
 
 
-mcculloch.var.test.default<-
+mcculloch.Var.test.default<-
 function (x, y = NULL,
        alternative = c("two.sided", "less", "greater"),method= c("spearman","pearson", "kendall"),
        exact = NULL,conf.level = 0.95,continuity = FALSE, ...)
@@ -1287,14 +1290,14 @@ rval$method<-"McCulloch paired test for scale comparison"
 }
 
 
-mcculloch.var.test.paired <-
+mcculloch.Var.test.paired <-
 function(x,...)
 {
-    if(!is.numeric(x[,1])){return("mcculloch.var.test is only suitable to numeric paired data")}
+    if(!is.numeric(x[,1])){return("mcculloch.Var.test is only suitable to numeric paired data")}
     DATA <- x
 DNAME <- paste(names(DATA), collapse = " and ")
     names(DATA) <- c("x", "y")
-    y <- do.call("mcculloch.var.test", c(DATA, list(...)))
+    y <- do.call("mcculloch.Var.test", c(DATA, list(...)))
 y$data.name <- DNAME
     y
 }

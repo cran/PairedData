@@ -38,7 +38,7 @@ with(SkiExperts,t.test(paired(Actual,Imaginary)))
 
 # But a very interesting increase in dispersion in their
 # predicted times
-with(SkiExperts,var.test(paired(Actual,Imaginary)))
+with(SkiExperts,Var.test(paired(Actual,Imaginary)))
 }
 
 \keyword{datasets}

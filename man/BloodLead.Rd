@@ -34,9 +34,10 @@ data(BloodLead)
 # Control values are clealy less dispersed (and inferior)
 # than exposed levels
 with(BloodLead,plot(paired(Control,Exposed),type="McNeil"))
-with(BloodLead,var.test(paired(Control,Exposed)))
-with(BloodLead,grambsch.var.test(paired(Control,Exposed)))
-with(BloodLead,bonettseier.var.test(paired(Control,Exposed)))
+with(BloodLead,Var.test(paired(Control,Exposed)))
+
+with(BloodLead,grambsch.Var.test(paired(Control,Exposed)))
+with(BloodLead,bonettseier.Var.test(paired(Control,Exposed)))
 
 # Correlation is small (bad matching)
 with(BloodLead,cor.test(Control,Exposed))
