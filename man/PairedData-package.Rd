@@ -2,31 +2,21 @@
 \alias{PairedData-package}
 \alias{PairedData}
 \docType{package}
-\title{A package for visualising and analysing paired data.
+\title{
+\packageTitle{PairedData}
 }
-
 \description{
-A package for visualising and analysing paired (mainly numeric) data with S4 class.
-
+\packageDescription{PairedData}
 }
-
 \details{
-\tabular{ll}{
-Package: \tab PairedData\cr
-Type: \tab Package\cr
-Version: \tab 0.9.9\cr
-Date: \tab 2012-05-01\cr
-License: \tab GPL \cr
-Depends: \tab methods\cr
-}
-}
 
-
+The DESCRIPTION file:
+\packageDESCRIPTION{PairedData}
+\packageIndices{PairedData}
+}
 \author{
-Stephane Champely
+\packageAuthor{PairedData}
 
-Maintainer: Stephane Champely<champely@univ-lyon1.fr>
+Maintainer: \packageMaintainer{PairedData}
 }
-
-
-\keyword{package}
+\keyword{ package }

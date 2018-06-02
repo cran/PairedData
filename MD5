@@ -1,7 +1,8 @@
-7dac00fe172b6bb97d7c03a261cb1714 *DESCRIPTION
+b106a86a2c7e4a714a074d4d3b383b27 *DESCRIPTION
 57052dbbf166ee3e729ba7cd35bcd3f7 *NAMESPACE
 ddafaf88479181bc5e162f014402434a *R/ClassP1.R
 808d3c542aa938d830c70046efad63f3 *R/global1.R
+17dc64187a7f5439029dd3a3f3f13f8c *build/partial.rdb
 bb2ba2d5717f0d5f8a2cd4ee8b09154c *data/Anorexia.rda
 40f0db826d8c87dc7954afd8adafcc5f *data/Barley.rda
 eb721433e51854f9440d598edd51451c *data/Blink.rda
@@ -44,7 +45,7 @@ edc8d6901e8879678fd267efaadecdb6 *man/GDO.Rd
 fe7d5b60cd6c98e721f28fd6461f03f6 *man/Iron.Rd
 cba1146ca3956d7dcb8b73519756cb45 *man/Meat.Rd
 1495182aaae13fa5a44ef227163bd246 *man/PairedData-internal.Rd
-b90d6d2a044f6efb0e45596c5d015823 *man/PairedData-package.Rd
+b689916ea0508d2a93539da2e4926979 *man/PairedData-package.Rd
 741798ac3453e8bcb8d5016a4fe32745 *man/PrisonStress.Rd
 c5cf88717028c0517ea851c2d0be94c5 *man/Rugby.Rd
 a823a99f198e912115ecd65eca9156a6 *man/Sewage.Rd
